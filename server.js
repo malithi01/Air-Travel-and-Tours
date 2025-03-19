@@ -15,6 +15,8 @@ const app = express();
 //import routes
 const carRoute = require("./routes/carRoute");
 const flightRoute = require("./routes/flightBooking");
+const hotelRoute = require("./routes/hotelRoute");
+
 
 //app middleware
 app.use(bodyParser.json());
@@ -23,6 +25,7 @@ app.use(cors());
 //route middleware
 app.use(carRoute);
 app.use(flightRoute);
+app.use(hotelRoute);
 
 //declaring server running port and creating DB connection
 const PORT = 8000;
