@@ -71,4 +71,4 @@ const flightSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Booking", flightSchema);
+module.exports = mongoose.model("Bookings", flightSchema);
