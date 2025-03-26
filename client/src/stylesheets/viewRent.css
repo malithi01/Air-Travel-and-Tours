@@ -1,0 +1,57 @@
+/* Main container for the rent details */
+.rent-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  /* Styling each rent card */
+  .rent-card {
+    width: 80%;
+    max-width: 800px;
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Styling for the rent details */
+  .rent-details {
+    padding: 15px;
+    font-size: 1.1rem;
+  }
+  
+  /* Styling for each term in the rent details */
+  .rent-details dd {
+    margin-bottom: 12px;
+  }
+  
+  /* Styling the heading (carOrderId) */
+  .rent-details h4 {
+    font-size: 1.5rem;
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  /* Highlight the label of each term */
+  .rent-details strong {
+    font-weight: bold;
+    color: #2d3e50;
+  }
+  
+  /* General styling for the page */
+  body {
+    background-color: #f1f1f1;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Ensure the page content is centered and readable */
+  .rent-container h1 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
