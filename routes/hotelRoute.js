@@ -12,21 +12,22 @@ router.post('/hotel/save', async (req, res) => {
         await newBook.save();
 
         return res.status(200).json({ message: "Details saved successfully" });
-    } catch (error) {
+    } catch (err) {
         return res.status(400).json({ error: error.message });
     }
 });
 
 //get all rent details
 
-router.get('hotel',async (req,res)=>{
-    try{
-        const hotelBook = await HotelBook.find().exec();
-        return res.status(200).json({success:true,existingRecords:book});
-    }catch(err){
-        return res.status(400).json({error:err.message});
+router.get('/hotel', async (req, res) => { 
+    try {
+        const hotels = await HotelBook.find().exec();
+        return res.status(200).json({ success: true, existingHotel: hotels });
+    } catch (err) {
+        return res.status(400).json({ error: err.message });
     }
 });
+
 
 //update booking details
 router.put("/hotel/update/:id", async (req,res) =>{
