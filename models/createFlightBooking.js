@@ -32,11 +32,6 @@ const flightSchema = new mongoose.Schema({
     required: true,
   },
 
-  nationality: {
-    type: String,
-    required: true,
-  },
-
   // Flight Details
   airlineName: {
     type: String,

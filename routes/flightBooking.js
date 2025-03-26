@@ -12,7 +12,7 @@ router.post("/booking/save", async (req, res) => {
     await newBooking.save();
 
     return res.status(200).json({ success: "Details saved successfully" });
-  } catch (error) {
+  } catch (err) {
     return res.status(400).json({ error: err.message });
   }
 });
@@ -22,7 +22,9 @@ router.post("/booking/save", async (req, res) => {
 router.get("/booking", async (req, res) => {
   try {
     const newBooking = await Booking.find().exec();
-    return res.status(200).json({ success: true, existingRecords: newBooking });
+    return res
+      .status(200)
+      .json({ success: true, existingBookings: newBooking });
   } catch (err) {
     return res.status(400).json({ error: err.message });
   }
