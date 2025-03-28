@@ -1,27 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const ViewBookingDetails = () => {
+const bookingDetailsCreate2 = () => {
   const [BookingDetails, setBookings] = useState([]);
-
-  useEffect(() => {
-    const getBookingDetails = async () => {
-      try {
-        const res = await axios.get("http://localhost:8000/booking");
-        setBookings(res.data.existingBookings);
-        console.log("Status: " + res.data.success);
-        console.log(res.data.message);
-      } catch (err) {
-        if (err.response) {
-          console.log(err.response.data.error);
-        } else {
-          console.log("Error occurred while processing your get request");
-        }
-      }
-    };
-
-    getBookingDetails();
-  }, []);
 
   return (
     <div className="d-flex flex-column align-items-center">
@@ -66,7 +47,7 @@ const ViewBookingDetails = () => {
               {booking.noOfPassengers || "Loading..."}
             </dd>
             <dd>
-              <strong>Seat Type:</strong> 
+              <strong>Seat Type:</strong>
               {booking.seatType || "Loading..."}
             </dd>
             <dd>
