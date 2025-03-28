@@ -66,8 +66,7 @@ const ViewBookingDetails = () => {
               {booking.noOfPassengers || "Loading..."}
             </dd>
             <dd>
-              <strong>Seat Type:</strong> 
-              {booking.seatType || "Loading..."}
+              <strong>Seat Type:</strong> {booking.seatType || "Loading..."}
             </dd>
             <dd>
               <strong>Ticket Price:</strong>{" "}
