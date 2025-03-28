@@ -314,4 +314,4 @@ const CreateBookings = () => {
   );
 }
 
-export default CreateBookingDetails;
+export default CreateBookings;
