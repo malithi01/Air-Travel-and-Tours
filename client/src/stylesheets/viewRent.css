@@ -1,95 +1,75 @@
-/* Main container for the rent details */
 .rent-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  background-color: #f8f9fa;
 }
 
-/* Styling each rent card */
 .rent-card {
-  width: 80%;
-  max-width: 800px;
-  margin-top: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 60%;
   padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 15px 0;
+  transition: transform 0.3s ease-in-out;
 }
 
-/* Styling for the rent details */
+.rent-card:hover {
+  transform: translateY(-5px);
+}
+
 .rent-details {
-  padding: 15px;
-  font-size: 1.1rem;
-}
-
-/* Styling for each term in the rent details */
-.rent-details dd {
-  margin-bottom: 12px;
-}
-
-/* Styling the heading (carOrderId) */
-.rent-details h4 {
-  font-size: 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  font-size: 16px;
   color: #333;
-  font-weight: bold;
+}
+
+.rent-details dd {
+  margin: 5px 0;
+  padding: 8px;
+  background: #eef2f3;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+h4 {
   text-align: center;
-}
-
-/* Highlight the label of each term */
-.rent-details strong {
-  font-weight: bold;
-  color: #2d3e50;
-}
-
-/* General styling for the page */
-body {
-  background-color: #f1f1f1;
-  font-family: Arial, sans-serif;
-}
-
-/* Ensure the page content is centered and readable */
-.rent-container h1 {
-  font-size: 2rem;
-  text-align: center;
-  margin-bottom: 30px;
+  color: #007bff;
+  margin-bottom: 10px;
 }
 
 .button-container {
   display: flex;
-  justify-content: space-between; /* Aligns buttons to left and right */
-  margin-top: 10px;
-  width: 100%; /* Ensures buttons take full width of the card */
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background 0.3s;
 }
 
 .update-button {
-  background-color: #007bff;
+  background-color: #28a745;
   color: white;
-  border: none;
-  padding: 8px 12px;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  gap: 5px; /* Adds space between text and icon */
 }
 
 .update-button:hover {
-  background-color: #0056b3;
+  background-color: #218838;
 }
 
 .delete-button {
   background-color: #dc3545;
   color: white;
-  border: none;
-  padding: 8px 12px;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  gap: 5px; /* Adds space between text and icon */
 }
 
 .delete-button:hover {

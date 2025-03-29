@@ -6,6 +6,7 @@ import editRents from "./components/editRents";
 import bookingDetails from "./components/bookingDetails";
 import viewHotel from "./components/viewHotel";
 import ratingAndReviewDetails from "./components/ratingAndReviewDetails";
+import carDashboard from "./components/carDashboard";
 import CreateHotel from "./components/createHotel";
 import EditHotel from "./components/editHotel";
 import CreateBookings from "./components/createBookingDetails";
@@ -30,6 +31,7 @@ function App() {
           <Route path="/bookings/details" Component={bookingDetails} />
           <Route path="/viewHotel" Component={viewHotel}/>
           <Route path="/ratingAndReviewDetails" Component={ratingAndReviewDetails} />
+          <Route path="/carDashboard" Component={carDashboard} />
           <Route path="/bookings/create" Component={CreateBookings} />
           <Route path="/createRatingAndReview" Component={createRatingAndReview} />
         </Routes>

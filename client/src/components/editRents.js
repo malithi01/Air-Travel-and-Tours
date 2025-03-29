@@ -5,7 +5,10 @@ import "../stylesheets/editRent.css";
 
 const EditRents = () => {
   const [carOrderid, setCarOrderId] = useState("");
-  const [destination, setDestination] = useState("");
+  const [nameOfRenter, setNameOfRenter] = useState("");
+  const [telNo, SetTelNo] = useState("");
+  const [country, setCountry] = useState("");
+  const [city, setCity] = useState("");
   const [vehicleType, setVehicleType] = useState("");
   const [pickUpLocation, setPickUpLocation] = useState("");
   const [pickUpDate, setPickUpDate] = useState("");
@@ -22,7 +25,10 @@ const EditRents = () => {
       .then((res) => {
         const data = res.data.rentDetails;
         setCarOrderId(data.carOrderid);
-        setDestination(data.destination);
+        setNameOfRenter(data.nameOfRenter);
+        SetTelNo(data.telNo);
+        setCountry(data.country);
+        setCity(data.city);
         setVehicleType(data.vehicleType);
         setPickUpLocation(data.pickUpLocation);
         setPickUpDate(
@@ -33,7 +39,7 @@ const EditRents = () => {
         setDropOffLocation(data.dropOffLocation);
         setDropOffDate(
           data.dropOffDate
-            ? new Date(data.pickUpDate).toISOString().slice(0, 16)
+            ? new Date(data.dropOffDate).toISOString().slice(0, 16)
             : ""
         );
       })
@@ -49,8 +55,26 @@ const EditRents = () => {
       formIsValid = false;
     }
 
-    if (!destination.trim()) {
-      errors.destination = "Destination is required";
+    if (!nameOfRenter.trim()) {
+      errors.nameOfRenter = "Name is required";
+      formIsValid = false;
+    }
+
+    if (!telNo.trim()) {
+      errors.telNo = "Contact Number is required";
+      formIsValid = false;
+    } else if (!/^\d{10,12}$/.test(telNo)) {
+      errors.telNo = "Invalid Contact number. Must be 10-12 digits long.";
+      formIsValid = false;
+    }
+
+    if (!country.trim()) {
+      errors.country = "Country is required";
+      formIsValid = false;
+    }
+
+    if (!city.trim()) {
+      errors.city = "City is required";
       formIsValid = false;
     }
 
@@ -106,7 +130,10 @@ const EditRents = () => {
 
     const updatedRentData = {
       carOrderid,
-      destination,
+      nameOfRenter,
+      telNo,
+      country,
+      city,
       vehicleType,
       pickUpLocation,
       pickUpDate: new Date(pickUpDate).toISOString(),
@@ -126,12 +153,17 @@ const EditRents = () => {
   const getOneDayLaterDate = () => {
     const today = new Date();
     today.setDate(today.getDate() + 2);
-    return today.toISOString().slice(0, 16); 
+    return today.toISOString().slice(0, 16);
   };
 
   return (
     <div className="editcontainer">
-      <div className="editcard">
+      <button className="btn-back">
+        <a href="/rentDetails" className="back-link">
+          Back
+        </a>
+      </button>
+      <div>
         <h2 className="edittitle">Update Rent Details</h2>
         <form onSubmit={updateData}>
           <div className="editform-group">
@@ -148,15 +180,54 @@ const EditRents = () => {
           </div>
 
           <div className="editform-group">
-            <label>Destination</label>
+            <label>Full Name</label>
             <input
               type="text"
-              value={destination}
-              onChange={(e) => setDestination(e.target.value)}
-              className={formErrors.destination ? "error" : ""}
+              value={nameOfRenter}
+              onChange={(e) => setNameOfRenter(e.target.value)}
+              className={formErrors.nameOfRenter ? "error" : ""}
             />
-            {formErrors.destination && (
-              <p className="editerror-message">{formErrors.destination}</p>
+            {formErrors.nameOfRenter && (
+              <p className="editerror-message">{formErrors.nameOfRenter}</p>
+            )}
+          </div>
+
+          <div className="editform-group">
+            <label>Contact Number</label>
+            <input
+              type="text"
+              value={telNo}
+              onChange={(e) => SetTelNo(e.target.value)}
+              className={formErrors.telNo ? "error" : ""}
+            />
+            {formErrors.telNo && (
+              <p className="editerror-message">{formErrors.telNo}</p>
+            )}
+          </div>
+
+          <div className="editform-group">
+            <label>Country</label>
+            <input
+              type="text"
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
+              className={formErrors.country ? "error" : ""}
+            />
+            {formErrors.country && (
+              <p className="editerror-message">{formErrors.country}</p>
+            )}
+          </div>
+
+          <div className="editform-group">
+            <label>City</label>
+            <input
+              type="text"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+              className={formErrors.city ? "error" : ""}
+            />
+            {formErrors.city && (
+              <p className="editerror-message">{formErrors.city}</p>
             )}
           </div>
 
@@ -212,7 +283,13 @@ const EditRents = () => {
             <input
               type="datetime-local"
               value={dropOffDate}
-              min={pickUpDate ? new Date(new Date(pickUpDate).getTime() + 2).toISOString().slice(0, 16) : new Date().toISOString().slice(0, 16)}
+              min={
+                pickUpDate
+                  ? new Date(new Date(pickUpDate).getTime() + 2)
+                      .toISOString()
+                      .slice(0, 16)
+                  : new Date().toISOString().slice(0, 16)
+              }
               onChange={(e) => setDropOffDate(e.target.value)}
             />
           </div>
