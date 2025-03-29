@@ -7,6 +7,7 @@ import bookingDetails from "./components/bookingDetails";
 import viewHotel from "./components/viewHotel";
 import ratingAndReviewDetails from "./components/ratingAndReviewDetails";
 import CreateBookings from "./components/createBookingDetails";
+import createRatingAndReview from "./components/createRatingAndReview";
         
 
 
@@ -23,6 +24,7 @@ function App() {
           <Route path="/viewHotel" Component={viewHotel}/>
           <Route path="/ratingAndReviewDetails" Component={ratingAndReviewDetails} />
           <Route path="/bookings/create" Component={CreateBookings} />
+          <Route path="/createRatingAndReview" Component={createRatingAndReview} />
 
         </Routes>
       </div>
