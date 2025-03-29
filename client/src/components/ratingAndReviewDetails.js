@@ -30,24 +30,30 @@ const ViewRatingAndReviewDetails = () => {
 
   return (
     <div className="d-flex flex-column align-items-center">
-      {RatingAndReviewDetails.map((rating, index) => (
+      {RatingAndReviewDetails.map((feedback, index) => (
         <div
           key={index}
           className="card text-center"
           style={{ width: "40rem", marginTop: "20px" }}
         >
           <dl className="row" style={{ padding: "20px" }}>
-            {/* <dd>
-              <h4 style={{ textAlign: "center" }}>{rating.carOrderid}</h4>
-            </dd> */}
             <dd>
-              <strong>Name:</strong> {rating.name || "Loading..."}
+              <strong>Name:</strong> {feedback.name || "Loading..."}
             </dd>
             <dd>
-              <strong>Email:</strong> {rating.email || "Loading..."}
+              <strong>Email:</strong> {feedback.email || "Loading..."}
             </dd>
             <dd>
-              <strong>Description:</strong> {rating.description || "Loading..."}
+              <strong>Date:</strong> {feedback.date || "Loading..."}
+            </dd>
+            <dd>
+              <strong>Service Type:</strong> {feedback.serviceType || "Loading..."}
+            </dd>
+            <dd>
+              <strong>Review:</strong> {feedback.review || "Loading..."}
+            </dd>
+            <dd>
+              <strong>Rating:</strong> {feedback.rating || "Loading..."}
             </dd>
           </dl>
         </div>
