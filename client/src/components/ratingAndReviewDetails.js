@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const ViewRatingAndReviewDetails = () => {
   const [RatingAndReviewDetails, setRatingAndReview] = useState([]);
+   const navigate = useNavigate();
 
   useEffect(() => {
     const getRatingAndReviewDetails = async () => {
@@ -23,14 +25,38 @@ const ViewRatingAndReviewDetails = () => {
     getRatingAndReviewDetails();
   }, []);
 
-//     //filter RatingDetails based on searchCustomer
-//   const filteredCustomer = RatingDetails.filter((rate) =>
-//     rate.carOrderid.toLowerCase().includes(searchCustomer.toLowerCase())
-//   );
+
+const handleDelete = async (id) => {
+  try {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this record?"
+    );
+    if (confirmed) {
+      await axios
+        .delete(`http://localhost:8000/reviews_and_rating/delete/${id}`)
+        .then((res) => {
+          alert(res.data.message);
+          console.log(res.data.message);
+          setRatingAndReview(RatingAndReviewDetails.filter((ratingAndReview) => ratingAndReview._id !== id));
+        })
+        .catch((err) => {
+          if (err.response) {
+            console.log(err.response.data.message);
+          } else {
+            console.log("Error occured while processing your axios delete");
+          }
+        });
+    } else {
+      alert("Deletion cancelled!");
+    }
+  } catch (err) {
+    console.log("handleDelete function failed! ERROR: " + err.message);
+  }
+};
 
   return (
     <div className="d-flex flex-column align-items-center">
-      {RatingAndReviewDetails.map((feedback, index) => (
+      {RatingAndReviewDetails.map((ratingAndReview, index) => (
         <div
           key={index}
           className="card text-center"
@@ -38,24 +64,40 @@ const ViewRatingAndReviewDetails = () => {
         >
           <dl className="row" style={{ padding: "20px" }}>
             <dd>
-              <strong>Name:</strong> {feedback.name || "Loading..."}
+              <strong>Name:</strong> {ratingAndReview.name || "Loading..."}
             </dd>
             <dd>
-              <strong>Email:</strong> {feedback.email || "Loading..."}
+              <strong>Email:</strong> {ratingAndReview.email || "Loading..."}
             </dd>
             <dd>
-              <strong>Date:</strong> {feedback.date || "Loading..."}
+              <strong>Date:</strong> {ratingAndReview.date || "Loading..."}
             </dd>
             <dd>
-              <strong>Service Type:</strong> {feedback.serviceType || "Loading..."}
+              <strong>Service Type:</strong> {ratingAndReview.serviceType || "Loading..."}
             </dd>
             <dd>
-              <strong>Review:</strong> {feedback.review || "Loading..."}
+              <strong>Review:</strong> {ratingAndReview.review || "Loading..."}
             </dd>
             <dd>
-              <strong>Rating:</strong> {feedback.rating || "Loading..."}
+              <strong>Rating:</strong> {ratingAndReview.rating || "Loading..."}
             </dd>
           </dl>
+
+          <div className="button-container">
+            <button
+              className="update-button"
+              onClick={() => navigate(`/editRatingAndReviews/${ratingAndReview._id}`)}
+            >
+              📝 Update 
+            </button>
+
+            <button
+              className="delete-button"
+              onClick={() => handleDelete(ratingAndReview._id)}
+            >
+              🗑️ Delete
+            </button>
+          </div>
         </div>
       ))}
     </div>
