@@ -1,47 +1,43 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
-import "../stylesheets/editRent.css";
 
-const EditRents = () => {
-  const [carOrderid, setCarOrderId] = useState("");
-  const [nameOfRenter, setNameOfRenter] = useState("");
-  const [telNo, SetTelNo] = useState("");
-  const [country, setCountry] = useState("");
-  const [city, setCity] = useState("");
-  const [vehicleType, setVehicleType] = useState("");
-  const [pickUpLocation, setPickUpLocation] = useState("");
-  const [pickUpDate, setPickUpDate] = useState("");
-  const [dropOffLocation, setDropOffLocation] = useState("");
-  const [dropOffDate, setDropOffDate] = useState("");
-  const [formErrors, setFormErrors] = useState({});
+const EditBookings = () => {
+  const [bookingid, setBookingId] = useState("");
+    const [fullName, setFullName] = useState("");
+    const [age, setAge] = useState("");
+    const [contactNumber, setContactNumber] = useState("");
+    const [emailAddress, setEmailAddress] = useState("");
+    const [passportNumber, setPassportNumber] = useState("");
+    const [airlineName, setAirlineName] = useState("");
+    const [flightClass, setFlightClass] = useState("");
+    const [noOfPassengers, setNoOfPassengers] = useState("");
+    const [seatType, setSeatType] = useState("");
+    const [ticketPrice, setTicketPrice] = useState("");
+    const [paymentMethod, setPaymentMethod] = useState("");
+    const [formErrors, setFormErrors] = useState({});
 
   const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/rent/${id}`)
+      .get(`http://localhost:8000/booking/${id}`)
       .then((res) => {
         const data = res.data.rentDetails;
-        setCarOrderId(data.carOrderid);
-        setNameOfRenter(data.nameOfRenter);
-        SetTelNo(data.telNo);
-        setCountry(data.country);
-        setCity(data.city);
-        setVehicleType(data.vehicleType);
-        setPickUpLocation(data.pickUpLocation);
-        setPickUpDate(
-          data.pickUpDate
-            ? new Date(data.pickUpDate).toISOString().slice(0, 16)
-            : ""
-        );
-        setDropOffLocation(data.dropOffLocation);
-        setDropOffDate(
-          data.dropOffDate
-            ? new Date(data.dropOffDate).toISOString().slice(0, 16)
-            : ""
-        );
+        setBookingId(data.bookingid);
+        setFullName(data.fullName);
+        setAge(data.age);
+        setContactNumber(data.contactNumber);
+        setEmailAddress(data.emailAddress);
+        setPassportNumber(data.passportNumber);
+        setAirlineName(data.airlineName);
+        setFlightClass(data.flightClass);
+        setNoOfPassengers(data.noOfPassengers);
+        setSeatType(data.seatType);
+        setTicketPrice(data.ticketPrice);
+        setPaymentMethod(data.paymentMethod);
+        
       })
       .catch((err) => console.log("Error fetching data"));
   }, [id]);
@@ -55,26 +51,8 @@ const EditRents = () => {
       formIsValid = false;
     }
 
-    if (!nameOfRenter.trim()) {
-      errors.nameOfRenter = "Name is required";
-      formIsValid = false;
-    }
-
-    if (!telNo.trim()) {
-      errors.telNo = "Contact Number is required";
-      formIsValid = false;
-    } else if (!/^\d{10,12}$/.test(telNo)) {
-      errors.telNo = "Invalid Contact number. Must be 10-12 digits long.";
-      formIsValid = false;
-    }
-
-    if (!country.trim()) {
-      errors.country = "Country is required";
-      formIsValid = false;
-    }
-
-    if (!city.trim()) {
-      errors.city = "City is required";
+    if (!destination.trim()) {
+      errors.destination = "Destination is required";
       formIsValid = false;
     }
 
@@ -130,10 +108,7 @@ const EditRents = () => {
 
     const updatedRentData = {
       carOrderid,
-      nameOfRenter,
-      telNo,
-      country,
-      city,
+      destination,
       vehicleType,
       pickUpLocation,
       pickUpDate: new Date(pickUpDate).toISOString(),
@@ -158,12 +133,7 @@ const EditRents = () => {
 
   return (
     <div className="editcontainer">
-      <button className="btn-back">
-        <a href="/rentDetails" className="back-link">
-          Back
-        </a>
-      </button>
-      <div>
+      <div className="editcard">
         <h2 className="edittitle">Update Rent Details</h2>
         <form onSubmit={updateData}>
           <div className="editform-group">
@@ -180,54 +150,15 @@ const EditRents = () => {
           </div>
 
           <div className="editform-group">
-            <label>Full Name</label>
+            <label>Destination</label>
             <input
               type="text"
-              value={nameOfRenter}
-              onChange={(e) => setNameOfRenter(e.target.value)}
-              className={formErrors.nameOfRenter ? "error" : ""}
+              value={destination}
+              onChange={(e) => setDestination(e.target.value)}
+              className={formErrors.destination ? "error" : ""}
             />
-            {formErrors.nameOfRenter && (
-              <p className="editerror-message">{formErrors.nameOfRenter}</p>
-            )}
-          </div>
-
-          <div className="editform-group">
-            <label>Contact Number</label>
-            <input
-              type="text"
-              value={telNo}
-              onChange={(e) => SetTelNo(e.target.value)}
-              className={formErrors.telNo ? "error" : ""}
-            />
-            {formErrors.telNo && (
-              <p className="editerror-message">{formErrors.telNo}</p>
-            )}
-          </div>
-
-          <div className="editform-group">
-            <label>Country</label>
-            <input
-              type="text"
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
-              className={formErrors.country ? "error" : ""}
-            />
-            {formErrors.country && (
-              <p className="editerror-message">{formErrors.country}</p>
-            )}
-          </div>
-
-          <div className="editform-group">
-            <label>City</label>
-            <input
-              type="text"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-              className={formErrors.city ? "error" : ""}
-            />
-            {formErrors.city && (
-              <p className="editerror-message">{formErrors.city}</p>
+            {formErrors.destination && (
+              <p className="editerror-message">{formErrors.destination}</p>
             )}
           </div>
 
@@ -303,4 +234,4 @@ const EditRents = () => {
   );
 };
 
-export default EditRents;
+export default EditBookings;
