@@ -29,8 +29,8 @@ const ViewRentDetails = () => {
   // Function to calculate price
   const calculateTotalPrice = (vehicleType, pickUpDate, dropOffDate) => {
     const dailyRates = {
-      car: 50,
-      van: 100,
+      car: 10000,
+      van: 15000,
       bike: 20,
     };
 
@@ -78,10 +78,19 @@ const ViewRentDetails = () => {
         <div key={index} className="rent-card">
           <dl className="rent-details">
             <dd>
-              <h4>{rent.carOrderid}</h4>
+              <strong>Order ID: </strong> {rent.carOrderid || "Loading..."}
             </dd>
             <dd>
-              <strong>Destination:</strong> {rent.destination || "Loading..."}
+              <strong>Full Name:</strong> {rent.nameOfRenter || "Loading..."}
+            </dd>
+            <dd>
+              <strong>Contact Number:</strong> {rent.telNo || "Loading..."}
+            </dd>
+            <dd>
+              <strong>Country:</strong> {rent.country || "Loading..."}
+            </dd>
+            <dd>
+              <strong>City:</strong> {rent.city || "Loading..."}
             </dd>
             <dd>
               <strong>Vehicle Type:</strong> {rent.vehicleType || "Loading..."}

@@ -2,9 +2,13 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const CreateRatingAndReview = () => {
+  const [reviewId, setReviewId] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [description, setDescription] = useState("");
+  const [date, setDate] = useState("");
+  const [serviceType, setServiceType] = useState("");
+  const [review, setReview] = useState("");
+  const [rating, setRating] = useState("");
   const [formErrors, setFormErrors] = useState({});
 
   // Validating form details
@@ -12,52 +16,40 @@ const CreateRatingAndReview = () => {
     const errors = {};
     let formIsValid = true;
 
+    if (!reviewId.trim()) {
+      errors.reviewId = "Review ID is required";
+      formIsValid = false;
+    }
+
     if (!name.trim()) {
-      errors.name = "name ID is required";
+      errors.name = "Name is required";
       formIsValid = false;
     }
 
     if (!email.trim()) {
-      errors.email = "email is required";
+      errors.email = "Email is required";
       formIsValid = false;
     }
 
-    if (!description.trim()) {
-      errors.description = "description is required";
+    if (!date.trim()) {
+      errors.date = "Date is required";
       formIsValid = false;
     }
 
-    // if (!pickUpLocation.trim()) {
-    //   errors.pickUpLocation = "Pick Up Location is required";
-    //   formIsValid = false;
-    // }
+    if (!serviceType.trim()) {
+      errors.serviceType = "Service Type is required";
+      formIsValid = false;
+    }
 
-    // if (!pickUpDate) {
-    //   errors.pickUpDate = "Pick Up Date is required";
-    //   formIsValid = false;
-    // } else {
-    //   const currentDate = new Date();
-    //   const selectedDate = new Date(pickUpDate);
-    //   if (selectedDate < currentDate) {
-    //     errors.pickUpDate = "Pick Up Date cannot be a past date";
-    //     formIsValid = false;
-    //   }
-    // }
+    if (!review.trim()) {
+      errors.review = "Review is required";
+      formIsValid = false;
+    }
 
-    // if (!dropOffDate) {
-    //   errors.dropOffDate = "Drop Off Date is required";
-    //   formIsValid = false;
-    // }
-
-    // if (pickUpDate && dropOffDate) {
-    //   const pickUp = new Date(pickUpDate);
-    //   const dropOff = new Date(dropOffDate);
-
-    //   if (dropOff < pickUp) {
-    //     errors.dropOffDate = "Drop Off Date cannot be before Pick Up Date";
-    //     formIsValid = false;
-    //   }
-    // }
+    if (!rating.trim()) {
+      errors.rating = "Rating is required";
+      formIsValid = false;
+    }
 
     setFormErrors(errors);
     return formIsValid;
@@ -71,13 +63,17 @@ const CreateRatingAndReview = () => {
     }
 
     try {
-      const newRentData = {
+      const newReviewData = {
+        reviewId,
         name,
         email,
-        description,
+        date,
+        serviceType,
+        review,
+        rating,
       };
 
-      await axios.post("/reviews_and_ratings/save", newReviewData);
+      await axios.post("http://localhost:8000/reviews_and_ratings/save", newReviewData);
 
       alert("Details saved successfully");
     } catch (error) {
@@ -90,16 +86,14 @@ const CreateRatingAndReview = () => {
     }
 
     // Reset form state
+    setReviewId("");
     setName("");
     setEmail("");
-    setDescription("");  
+    setDate("");
+    setServiceType("");
+    setReview("");
+    setRating("");
   };
-
-//   const getOneDayLaterDate = () => {
-//     const today = new Date();
-//     today.setDate(today.getDate() + 1);
-//     return today.toISOString().split("T")[0];
-//   };
 
   return (
     <div className="container">
@@ -110,85 +104,51 @@ const CreateRatingAndReview = () => {
         <h1 className="form-title">Ratings And Reviews</h1>
         <form onSubmit={sendData}>
           <div className="form-group">
+            <label>Review ID</label>
+            <input type="text" className="input" value={reviewId} disabled />
+            {formErrors.reviewId && <span className="error-text">{formErrors.reviewId}</span>}
+          </div>
+
+          <div className="form-group">
             <label>Name</label>
-            <input
-              type="text"
-              className={`input ${formErrors.name && "input-error"}`}
-              onChange={(e) => setName(e.target.value)}
-              value={carOrderid}
-            />
+            <input type="text" className={`input ${formErrors.name ? "input-error" : ""}`} onChange={(e) => setName(e.target.value)} value={name} />
             {formErrors.name && <span className="error-text">{formErrors.name}</span>}
           </div>
 
           <div className="form-group">
             <label>Email</label>
-            <input
-              type="text"
-              className={`input ${formErrors.email && "input-error"}`}
-              onChange={(e) => setEmailemail(e.target.value)}
-              value={email}
-            />
+            <input type="text" className={`input ${formErrors.email ? "input-error" : ""}`} onChange={(e) => setEmail(e.target.value)} value={email} />
             {formErrors.email && <span className="error-text">{formErrors.email}</span>}
           </div>
 
           <div className="form-group">
-            <label>Description</label>
-            <select
-              className={`input ${formErrors.vehicleType && "input-error"}`}
-              onChange={(e) => setVehicleType(e.target.value)}
-              value={vehicleType}
-            >
-              <option value="">Select a Vehicle type</option>
-              <option value="Car">Car</option>
-              <option value="Van">Van</option>
-              <option value="Bike">Bike</option>
+            <label>Date</label>
+            <input type="date" className={`input ${formErrors.date ? "input-error" : ""}`} onChange={(e) => setDate(e.target.value)} value={date} />
+            {formErrors.date && <span className="error-text">{formErrors.date}</span>}
+          </div>
+
+          <div className="form-group">
+            <label>Service Type</label>
+            <select className={`input ${formErrors.serviceType ? "input-error" : ""}`} onChange={(e) => setServiceType(e.target.value)} value={serviceType}>
+              <option value="">Select Service Type</option>
+              <option value="flightBooking">Flight Booking</option>
+              <option value="hotelBooking">Hotel Booking</option>
+              <option value="carRental">Car Rental</option>
+              <option value="packingAssistant">Packing Assistant</option>
             </select>
-            {formErrors.vehicleType && <span className="error-text">{formErrors.vehicleType}</span>}
+            {formErrors.serviceType && <span className="error-text">{formErrors.serviceType}</span>}
           </div>
 
           <div className="form-group">
-            <label>Pick Up Location</label>
-            <input
-              type="text"
-              className={`input ${formErrors.pickUpLocation && "input-error"}`}
-              onChange={(e) => setPickUpLocation(e.target.value)}
-              value={pickUpLocation}
-            />
-            {formErrors.pickUpLocation && <span className="error-text">{formErrors.pickUpLocation}</span>}
+            <label>Review</label>
+            <input type="text" className={`input ${formErrors.review ? "input-error" : ""}`} onChange={(e) => setReview(e.target.value)} value={review} />
+            {formErrors.review && <span className="error-text">{formErrors.review}</span>}
           </div>
 
           <div className="form-group">
-            <label>Pick Up Date</label>
-            <input
-              type="date"
-              className={`input ${formErrors.pickUpDate && "input-error"}`}
-              value={pickUpDate}
-              min={getOneDayLaterDate()}
-              onChange={(e) => setpickUpDate(e.target.value)}
-            />
-            {formErrors.pickUpDate && <span className="error-text">{formErrors.pickUpDate}</span>}
-          </div>
-
-          <div className="form-group">
-            <label>Drop Off Location</label>
-            <input
-              type="text"
-              className="input"
-              onChange={(e) => setDropOffLocation(e.target.value)}
-              value={dropOffLocation}
-            />
-          </div>
-
-          <div className="form-group">
-            <label>Drop Off Date</label>
-            <input
-              type="date"
-              className={`input ${formErrors.dropOffDate && "input-error"}`}
-              value={dropOffDate}
-              min={new Date().toISOString().split("T")[0]}
-              onChange={(e) => setDropOffDate(e.target.value)}
-            />
-            {formErrors.dropOffDate && <span className="error-text">{formErrors.dropOffDate}</span>}
+            <label>Rating</label>
+            <input type="text" className={`input ${formErrors.rating ? "input-error" : ""}`} onChange={(e) => setRating(e.target.value)} value={rating} />
+            {formErrors.rating && <span className="error-text">{formErrors.rating}</span>}
           </div>
 
           <button type="submit" className="btn-submit">Save</button>
@@ -198,4 +158,4 @@ const CreateRatingAndReview = () => {
   );
 };
 
-export default CreateRents;
+export default CreateRatingAndReview;

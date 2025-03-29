@@ -6,6 +6,7 @@ import editRents from "./components/editRents";
 import bookingDetails from "./components/bookingDetails";
 import viewHotel from "./components/viewHotel";
 import ratingAndReviewDetails from "./components/ratingAndReviewDetails";
+import carDashboard from "./components/carDashboard";
         
 
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="/bookingDetails" Component={bookingDetails} />
           <Route path="/viewHotel" Component={viewHotel}/>
           <Route path="/ratingAndReviewDetails" Component={ratingAndReviewDetails} />
+          <Route path="/carDashboard" Component={carDashboard} />
 
         </Routes>
       </div>

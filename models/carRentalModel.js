@@ -6,7 +6,19 @@ const carSchema = new mongoose.Schema({
         type: String,
         required:true
     },
-    destination:{
+    nameOfRenter:{
+        type: String,
+        required:true
+    },
+    telNo:{
+        type: String,
+        required:true
+    },
+    country:{
+        type: String,
+        required:true
+    },
+    city:{
         type: String,
         required:true
     },
