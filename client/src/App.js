@@ -11,8 +11,7 @@ import CreateHotel from "./components/createHotel";
 import EditHotel from "./components/editHotel";
 import CreateBookings from "./components/createBookingDetails";
 import createRatingAndReview from "./components/createRatingAndReview";
-        
-
+import editRatingAndReviews from "./components/editRatingAndReviews";        
 
 function App() {
   return (
@@ -34,6 +33,8 @@ function App() {
           <Route path="/carDashboard" Component={carDashboard} />
           <Route path="/bookings/create" Component={CreateBookings} />
           <Route path="/createRatingAndReview" Component={createRatingAndReview} />
+          <Route path="/editRatingAndReviews/:id" Component={editRatingAndReviews} />
+
         </Routes>
       </div>
     </Router>
