@@ -16,9 +16,6 @@ router.post("/reviews_and_ratings/save", async (req, res) => {
       return res.status(400).json({ error: err.message });
     }
   });
-  
-module.exports = router;
-module.exports = router;
 
 // Get all rent details
 router.get("/reviews_and_ratings", async (req, res) => {
