@@ -12,11 +12,6 @@ const flightSchema = new mongoose.Schema({
     required: true,
   },
 
-  gender: {
-    type: String,
-    required: true,
-  },
-
   contactNumber: {
     type: String,
     required: true,

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../stylesheets/viewRent.css";
 
 const ViewRentDetails = () => {
   const [RentDetails, setRents] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getRentDetails = async () => {
@@ -24,22 +26,22 @@ const ViewRentDetails = () => {
     getRentDetails();
   }, []);
 
-    // Function to calculate price
-    const calculateTotalPrice = (vehicleType, pickUpDate, dropOffDate) => {
-        const dailyRates = {
-          car: 50,
-          van: 100,
-          bike: 20,
-        };
-    
-        const startDate = new Date(pickUpDate);
-        const endDate = new Date(dropOffDate);
-        const diffTime = Math.abs(endDate - startDate);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 1; // Minimum 1 day
-        const dailyRate = dailyRates[vehicleType.toLowerCase()] || 0;
-    
-        return dailyRate * diffDays;
-      };
+  // Function to calculate price
+  const calculateTotalPrice = (vehicleType, pickUpDate, dropOffDate) => {
+    const dailyRates = {
+      car: 50,
+      van: 100,
+      bike: 20,
+    };
+
+    const startDate = new Date(pickUpDate);
+    const endDate = new Date(dropOffDate);
+    const diffTime = Math.abs(endDate - startDate);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 1; // Minimum 1 day
+    const dailyRate = dailyRates[vehicleType.toLowerCase()] || 0;
+
+    return dailyRate * diffDays;
+  };
 
   //implementing handleDelete function
   const handleDelete = async (id) => {
@@ -85,13 +87,15 @@ const ViewRentDetails = () => {
               <strong>Vehicle Type:</strong> {rent.vehicleType || "Loading..."}
             </dd>
             <dd>
-              <strong>Pick Up Location:</strong> {rent.pickUpLocation || "Loading..."}
+              <strong>Pick Up Location:</strong>{" "}
+              {rent.pickUpLocation || "Loading..."}
             </dd>
             <dd>
               <strong>Pick Up Date:</strong> {rent.pickUpDate || "Loading..."}
             </dd>
             <dd>
-              <strong>Drop Off Location:</strong> {rent.dropOffLocation || "Loading..."}
+              <strong>Drop Off Location:</strong>{" "}
+              {rent.dropOffLocation || "Loading..."}
             </dd>
             <dd>
               <strong>Drop Off Date:</strong> {rent.dropOffDate || "Loading..."}
@@ -106,17 +110,25 @@ const ViewRentDetails = () => {
               Rs
             </dd>
           </dl>
-          <button
-            className="delete-button"
-            onClick={() => handleDelete(rent._id)}
-          >
-            🗑️ Cancel Booking
-          </button>
+          <div className="button-container">
+            <button
+              className="update-button"
+              onClick={() => navigate(`/editRents/${rent._id}`)}
+            >
+              📝 Update Order
+            </button>
+
+            <button
+              className="delete-button"
+              onClick={() => handleDelete(rent._id)}
+            >
+              🗑️ Cancel Booking
+            </button>
+          </div>
         </div>
       ))}
     </div>
   );
-  
 };
 
 export default ViewRentDetails;

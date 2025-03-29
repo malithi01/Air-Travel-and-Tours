@@ -1,41 +1,43 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
-import "../stylesheets/editRent.css";
 
-const EditRents = () => {
-  const [carOrderid, setCarOrderId] = useState("");
-  const [destination, setDestination] = useState("");
-  const [vehicleType, setVehicleType] = useState("");
-  const [pickUpLocation, setPickUpLocation] = useState("");
-  const [pickUpDate, setPickUpDate] = useState("");
-  const [dropOffLocation, setDropOffLocation] = useState("");
-  const [dropOffDate, setDropOffDate] = useState("");
-  const [formErrors, setFormErrors] = useState({});
+const EditBookings = () => {
+  const [bookingid, setBookingId] = useState("");
+    const [fullName, setFullName] = useState("");
+    const [age, setAge] = useState("");
+    const [contactNumber, setContactNumber] = useState("");
+    const [emailAddress, setEmailAddress] = useState("");
+    const [passportNumber, setPassportNumber] = useState("");
+    const [airlineName, setAirlineName] = useState("");
+    const [flightClass, setFlightClass] = useState("");
+    const [noOfPassengers, setNoOfPassengers] = useState("");
+    const [seatType, setSeatType] = useState("");
+    const [ticketPrice, setTicketPrice] = useState("");
+    const [paymentMethod, setPaymentMethod] = useState("");
+    const [formErrors, setFormErrors] = useState({});
 
   const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8000/rent/${id}`)
+      .get(`http://localhost:8000/booking/${id}`)
       .then((res) => {
         const data = res.data.rentDetails;
-        setCarOrderId(data.carOrderid);
-        setDestination(data.destination);
-        setVehicleType(data.vehicleType);
-        setPickUpLocation(data.pickUpLocation);
-        setPickUpDate(
-          data.pickUpDate
-            ? new Date(data.pickUpDate).toISOString().slice(0, 16)
-            : ""
-        );
-        setDropOffLocation(data.dropOffLocation);
-        setDropOffDate(
-          data.dropOffDate
-            ? new Date(data.pickUpDate).toISOString().slice(0, 16)
-            : ""
-        );
+        setBookingId(data.bookingid);
+        setFullName(data.fullName);
+        setAge(data.age);
+        setContactNumber(data.contactNumber);
+        setEmailAddress(data.emailAddress);
+        setPassportNumber(data.passportNumber);
+        setAirlineName(data.airlineName);
+        setFlightClass(data.flightClass);
+        setNoOfPassengers(data.noOfPassengers);
+        setSeatType(data.seatType);
+        setTicketPrice(data.ticketPrice);
+        setPaymentMethod(data.paymentMethod);
+        
       })
       .catch((err) => console.log("Error fetching data"));
   }, [id]);
@@ -126,7 +128,7 @@ const EditRents = () => {
   const getOneDayLaterDate = () => {
     const today = new Date();
     today.setDate(today.getDate() + 2);
-    return today.toISOString().slice(0, 16); 
+    return today.toISOString().slice(0, 16);
   };
 
   return (
@@ -212,7 +214,13 @@ const EditRents = () => {
             <input
               type="datetime-local"
               value={dropOffDate}
-              min={pickUpDate ? new Date(new Date(pickUpDate).getTime() + 2).toISOString().slice(0, 16) : new Date().toISOString().slice(0, 16)}
+              min={
+                pickUpDate
+                  ? new Date(new Date(pickUpDate).getTime() + 2)
+                      .toISOString()
+                      .slice(0, 16)
+                  : new Date().toISOString().slice(0, 16)
+              }
               onChange={(e) => setDropOffDate(e.target.value)}
             />
           </div>
@@ -226,4 +234,4 @@ const EditRents = () => {
   );
 };
 
-export default EditRents;
+export default EditBookings;

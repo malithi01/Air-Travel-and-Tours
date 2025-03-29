@@ -138,8 +138,8 @@ const CreateRents = () => {
 
   const getOneDayLaterDate = () => {
     const today = new Date();
-    today.setDate(today.getDate() + 1);
-    return today.toISOString().split("T")[0];
+    today.setDate(today.getDate() + 2);
+    return today.toISOString().slice(0, 16);
   };
 
   return (
@@ -154,12 +154,7 @@ const CreateRents = () => {
         <form onSubmit={sendData}>
           <div className="form-group">
             <label>Order ID</label>
-            <input
-              type="text"
-              className="input"
-              value={carOrderid}
-              disabled
-            />
+            <input type="text" className="input" value={carOrderid} disabled />
             {formErrors.carOrderid && (
               <span className="error-text">{formErrors.carOrderid}</span>
             )}
@@ -238,7 +233,13 @@ const CreateRents = () => {
               type="datetime-local"
               className={`input ${formErrors.dropOffDate && "input-error"}`}
               value={dropOffDate}
-              min={new Date().toISOString().split("T")[0]}
+              min={
+                pickUpDate
+                  ? new Date(new Date(pickUpDate).getTime() + 2)
+                      .toISOString()
+                      .slice(0, 16)
+                  : new Date().toISOString().slice(0, 16)
+              }
               onChange={(e) => setDropOffDate(e.target.value)}
             />
             {formErrors.dropOffDate && (
