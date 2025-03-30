@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import "../stylesheets/editRent.css";
+import Header from "./header";
 
 const EditRents = () => {
   const [carOrderid, setCarOrderId] = useState("");
@@ -157,147 +158,151 @@ const EditRents = () => {
   };
 
   return (
-    <div className="editcontainer">
-      <button className="btn-back">
-        <a href="/rentDetails" className="back-link">
-          Back
-        </a>
-      </button>
-      <div>
-        <h2 className="edittitle">Update Rent Details</h2>
-        <form onSubmit={updateData}>
-          <div className="editform-group">
-            <label>Order ID</label>
-            <input
-              type="text"
-              value={carOrderid}
-              onChange={(e) => setCarOrderId(e.target.value)}
-              className={formErrors.carOrderid ? "error" : ""}
-            />
-            {formErrors.carOrderid && (
-              <p className="editerror-message">{formErrors.carOrderid}</p>
-            )}
-          </div>
+    <div>
+      {" "}
+      <Header />
+      <div className="editcontainer">
+        <button className="btn-back">
+          <a href="/rentDetails" className="back-link">
+            Back
+          </a>
+        </button>
+        <div>
+          <h2 className="edittitle">Update Rent Details</h2>
+          <form onSubmit={updateData}>
+            <div className="editform-group">
+              <label>Order ID</label>
+              <input
+                type="text"
+                value={carOrderid}
+                onChange={(e) => setCarOrderId(e.target.value)}
+                className={formErrors.carOrderid ? "error" : ""}
+              />
+              {formErrors.carOrderid && (
+                <p className="editerror-message">{formErrors.carOrderid}</p>
+              )}
+            </div>
 
-          <div className="editform-group">
-            <label>Full Name</label>
-            <input
-              type="text"
-              value={nameOfRenter}
-              onChange={(e) => setNameOfRenter(e.target.value)}
-              className={formErrors.nameOfRenter ? "error" : ""}
-            />
-            {formErrors.nameOfRenter && (
-              <p className="editerror-message">{formErrors.nameOfRenter}</p>
-            )}
-          </div>
+            <div className="editform-group">
+              <label>Full Name</label>
+              <input
+                type="text"
+                value={nameOfRenter}
+                onChange={(e) => setNameOfRenter(e.target.value)}
+                className={formErrors.nameOfRenter ? "error" : ""}
+              />
+              {formErrors.nameOfRenter && (
+                <p className="editerror-message">{formErrors.nameOfRenter}</p>
+              )}
+            </div>
 
-          <div className="editform-group">
-            <label>Contact Number</label>
-            <input
-              type="text"
-              value={telNo}
-              onChange={(e) => SetTelNo(e.target.value)}
-              className={formErrors.telNo ? "error" : ""}
-            />
-            {formErrors.telNo && (
-              <p className="editerror-message">{formErrors.telNo}</p>
-            )}
-          </div>
+            <div className="editform-group">
+              <label>Contact Number</label>
+              <input
+                type="text"
+                value={telNo}
+                onChange={(e) => SetTelNo(e.target.value)}
+                className={formErrors.telNo ? "error" : ""}
+              />
+              {formErrors.telNo && (
+                <p className="editerror-message">{formErrors.telNo}</p>
+              )}
+            </div>
 
-          <div className="editform-group">
-            <label>Country</label>
-            <input
-              type="text"
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
-              className={formErrors.country ? "error" : ""}
-            />
-            {formErrors.country && (
-              <p className="editerror-message">{formErrors.country}</p>
-            )}
-          </div>
+            <div className="editform-group">
+              <label>Country</label>
+              <input
+                type="text"
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+                className={formErrors.country ? "error" : ""}
+              />
+              {formErrors.country && (
+                <p className="editerror-message">{formErrors.country}</p>
+              )}
+            </div>
 
-          <div className="editform-group">
-            <label>City</label>
-            <input
-              type="text"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-              className={formErrors.city ? "error" : ""}
-            />
-            {formErrors.city && (
-              <p className="editerror-message">{formErrors.city}</p>
-            )}
-          </div>
+            <div className="editform-group">
+              <label>City</label>
+              <input
+                type="text"
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                className={formErrors.city ? "error" : ""}
+              />
+              {formErrors.city && (
+                <p className="editerror-message">{formErrors.city}</p>
+              )}
+            </div>
 
-          <div className="editform-group">
-            <label>Vehicle Type</label>
-            <select
-              value={vehicleType}
-              onChange={(e) => setVehicleType(e.target.value)}
-            >
-              <option value="">Select a Vehicle</option>
-              <option value="Car">Car</option>
-              <option value="Van">Van</option>
-              <option value="Bike">Bike</option>
-            </select>
-          </div>
+            <div className="editform-group">
+              <label>Vehicle Type</label>
+              <select
+                value={vehicleType}
+                onChange={(e) => setVehicleType(e.target.value)}
+              >
+                <option value="">Select a Vehicle</option>
+                <option value="Car">Car</option>
+                <option value="Van">Van</option>
+                <option value="Bike">Bike</option>
+              </select>
+            </div>
 
-          <div className="editform-group">
-            <label>Pick Up Location</label>
-            <input
-              type="text"
-              value={pickUpLocation}
-              onChange={(e) => setPickUpLocation(e.target.value)}
-            />
-            {formErrors.pickUpLocation && (
-              <span className="error-text">{formErrors.pickUpLocation}</span>
-            )}
-          </div>
+            <div className="editform-group">
+              <label>Pick Up Location</label>
+              <input
+                type="text"
+                value={pickUpLocation}
+                onChange={(e) => setPickUpLocation(e.target.value)}
+              />
+              {formErrors.pickUpLocation && (
+                <span className="error-text">{formErrors.pickUpLocation}</span>
+              )}
+            </div>
 
-          <div className="editform-group">
-            <label>Pick Up Date</label>
-            <input
-              type="datetime-local"
-              value={pickUpDate}
-              min={getOneDayLaterDate()}
-              onChange={(e) => setPickUpDate(e.target.value)}
-            />
-            {formErrors.pickUpDate && (
-              <span className="error-text">{formErrors.pickUpDate}</span>
-            )}
-          </div>
+            <div className="editform-group">
+              <label>Pick Up Date</label>
+              <input
+                type="datetime-local"
+                value={pickUpDate}
+                min={getOneDayLaterDate()}
+                onChange={(e) => setPickUpDate(e.target.value)}
+              />
+              {formErrors.pickUpDate && (
+                <span className="error-text">{formErrors.pickUpDate}</span>
+              )}
+            </div>
 
-          <div className="editform-group">
-            <label>Drop Off Location</label>
-            <input
-              type="text"
-              value={dropOffLocation}
-              onChange={(e) => setDropOffLocation(e.target.value)}
-            />
-          </div>
+            <div className="editform-group">
+              <label>Drop Off Location</label>
+              <input
+                type="text"
+                value={dropOffLocation}
+                onChange={(e) => setDropOffLocation(e.target.value)}
+              />
+            </div>
 
-          <div className="editform-group">
-            <label>Drop Off Date</label>
-            <input
-              type="datetime-local"
-              value={dropOffDate}
-              min={
-                pickUpDate
-                  ? new Date(new Date(pickUpDate).getTime() + 2)
-                      .toISOString()
-                      .slice(0, 16)
-                  : new Date().toISOString().slice(0, 16)
-              }
-              onChange={(e) => setDropOffDate(e.target.value)}
-            />
-          </div>
+            <div className="editform-group">
+              <label>Drop Off Date</label>
+              <input
+                type="datetime-local"
+                value={dropOffDate}
+                min={
+                  pickUpDate
+                    ? new Date(new Date(pickUpDate).getTime() + 2)
+                        .toISOString()
+                        .slice(0, 16)
+                    : new Date().toISOString().slice(0, 16)
+                }
+                onChange={(e) => setDropOffDate(e.target.value)}
+              />
+            </div>
 
-          <button type="submit" className="update-btn">
-            Update
-          </button>
-        </form>
+            <button type="submit" className="update-btn">
+              Update
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

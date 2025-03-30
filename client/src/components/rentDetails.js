@@ -76,6 +76,7 @@ const ViewRentDetails = () => {
     <div className="rent-container">
       {RentDetails.map((rent, index) => (
         <div key={index} className="rent-card">
+          <h3 style={{textAlign:"center"}}>View Booking Details</h3>
           <dl className="rent-details">
             <dd>
               <strong>Order ID: </strong> {rent.carOrderid || "Loading..."}

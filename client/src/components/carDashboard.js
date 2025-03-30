@@ -1,118 +1,63 @@
 import React, { Component } from "react";
 import "./../stylesheets/carDashboard.css";
 import Header from "./header";
+import Footer from "./footer";
 
-export default class carDashboard extends Component {
+export default class CarDashboard extends Component {
   render() {
     return (
-      <div>
+      <div className="dashboard-wrapper">
         <Header />
-        <br></br>
-
         <div className="car-dash-container">
-          <h1 className="plantTopic">
-            <br></br>
+          <h1 className="dashboard-title">
             Drive Your Way – Easy, Fast, Affordable
-            <br />
-            <br />
           </h1>
-          <div class="row" style={{ marginBottom: "50px" }}>
-            <div class="col-sm-4 mb-3 mb-sm-0">
-              <div
-                className="card"
-                style={{
-                  width: "18rem",
-                  height: "13rem",
-                  textAlign: "center",
-                  borderRadius: "20px",
-                  backgroundColor: "rgba(147, 203, 210, 0.6)",
-                  marginTop: "10px",
-                  paddingTop: "60px",
-                  alignItems: "center",
-                }}
-              >
-                {" "}
-                <h2 style={{ color: "#1a2a6c", marginTop: "00px" }}>
-                  Car <br /> 4 - 5 Passengers
-                </h2>
-                <img src="./images/car.jpg" className="image1"></img>
-                <h3 style={{ color: "brown" }}>
-                  Price Per Day : Rs. 10,000.00
-                </h3>
+          
+          <div className="vehicle-cards-container">
+            <div className="vehicle-card car">
+              <div className="vehicle-info">
+                <h2 className="vehicle-type">Car</h2>
+                <p className="passenger-count">4 - 5 Passengers</p>
               </div>
+              <div className="vehicle-image-container">
+                <img src="./images/car.png" alt="Car" className="vehicle-image" />
+              </div>
+              <p className="vehicle-price">Price Per Day: Rs. 10,000.00</p>
             </div>
-            <div class="col-sm-4 mb-3 mb-sm-0">
-              <div
-                className="card"
-                style={{
-                  width: "18rem",
-                  height: "13rem",
-                  textAlign: "center",
-                  borderRadius: "20px",
-                  backgroundColor: "rgba(147, 203, 210, 0.6)",
-                  marginTop: "10px",
-                  paddingTop: "60px",
-                  alignItems: "center",
-                }}
-              >
-                <h2 style={{ color: "#1a2a6c", marginTop: "00px" }}>
-                  Van <br /> 10 - 12 Passengers
-                </h2>
-                <img src="./images/van.jpg" className="image2"></img>
-                <h3 style={{ color: "brown" }}>
-                  Price Per Day : Rs. 17,000.00
-                </h3>
+
+            <div className="vehicle-card van">
+              <div className="vehicle-info">
+                <h2 className="vehicle-type">Van</h2>
+                <p className="passenger-count">10 - 12 Passengers</p>
               </div>
+              <div className="vehicle-image-container">
+                <img src="./images/van.png" alt="Van" className="vehicle-image" />
+              </div>
+              <p className="vehicle-price">Price Per Day: Rs. 17,000.00</p>
             </div>
-            <div class="col-sm-4 mb-3 mb-sm-0">
-              <div
-                className="card"
-                style={{
-                  width: "18rem",
-                  height: "13rem",
-                  textAlign: "center",
-                  borderRadius: "20px",
-                  backgroundColor: "rgba(147, 203, 210, 0.6)",
-                  marginTop: "10px",
-                  paddingTop: "60px",
-                  alignItems: "center",
-                }}
-              >
-                {" "}
-                <h2 style={{ color: "#1a2a6c", marginTop: "00px" }}>
-                  Bike <br /> 2 Passengers
-                </h2>
-                <img src="./images/bick.jpg" className="image3"></img>
-                <h3 style={{ color: "brown" }}>Price Per Day : Rs. 5,000.00</h3>
+
+            <div className="vehicle-card bike">
+              <div className="vehicle-info">
+                <h2 className="vehicle-type">Bike</h2>
+                <p className="passenger-count">2 Passengers</p>
               </div>
+              <div className="vehicle-image-container">
+                <img src="./images/bike.png" alt="Bike" className="vehicle-image" />
+              </div>
+              <p className="vehicle-price">Price Per Day: Rs. 5,000.00</p>
             </div>
           </div>
-          <div>
-            <a href="/createRents">
+          
+          <div className="action-buttons">
+            <a href="/createRents" className="action-link">
               <button className="book-button">Book Now</button>
             </a>
-          </div>
-          <br></br>
-          <div>
-            <a href="/rentDetails">
+            <a href="/rentDetails" className="action-link">
               <button className="view-button">View Booking Details</button>
             </a>
           </div>
-          <br></br>
-          {/* <div
-            className="card"
-            style={{
-              width: "78rem",
-              height: "11rem",
-              textAlign: "center",
-              borderRadius: "20px",
-              backgroundColor: "rgba(232, 239, 240, 0.8)",
-              marginTop: "10px",
-              paddingTop: "60px",
-              alignItems: "center",
-            }}
-          ></div> */}
         </div>
+        <Footer />
       </div>
     );
   }
