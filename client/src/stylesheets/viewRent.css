@@ -1,97 +1,142 @@
-/* Main container for the rent details */
 .rent-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 30px 20px;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Styling each rent card */
 .rent-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
   width: 80%;
-  max-width: 800px;
-  margin-top: 20px;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  padding: 30px;
+  margin: 18px 0;
+  transition: all 0.3s ease;
 }
 
-/* Styling for the rent details */
+.rent-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.rent-card h3 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+  font-size: 22px;
+  text-align: center;
+  border-bottom: 2px solid #f0f2f5;
+  padding-bottom: 12px;
+}
+
+/* Modified to always have exactly 2 columns */
 .rent-details {
-  padding: 15px;
-  font-size: 1.1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Always two columns */
+  gap: 15px;
+  margin: 0;
+  padding: 0;
 }
 
-/* Styling for each term in the rent details */
 .rent-details dd {
-  margin-bottom: 12px;
+  margin: 0;
+  padding: 12px 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  font-weight: 400;
+  color: #4a5568;
+  border-left: 3px solid #3498db;
+  transition: background-color 0.2s ease;
 }
 
-/* Styling the heading (carOrderId) */
-.rent-details h4 {
-  font-size: 1.5rem;
-  color: #333;
-  font-weight: bold;
-  text-align: center;
+.rent-details dd strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #2c3e50;
+  font-weight: 600;
 }
 
-/* Highlight the label of each term */
-.rent-details strong {
-  font-weight: bold;
-  color: #2d3e50;
-}
-
-/* General styling for the page */
-body {
-  background-color: #f1f1f1;
-  font-family: Arial, sans-serif;
-}
-
-/* Ensure the page content is centered and readable */
-.rent-container h1 {
-  font-size: 2rem;
-  text-align: center;
-  margin-bottom: 30px;
+.rent-details dd:hover {
+  background-color: #eef2f7;
 }
 
 .button-container {
   display: flex;
-  justify-content: space-between; /* Aligns buttons to left and right */
-  margin-top: 10px;
-  width: 100%; /* Ensures buttons take full width of the card */
+  justify-content: center;
+  gap: 20px;
+  margin-top: 25px;
+  padding-top: 15px;
+  border-top: 1px solid #f0f2f5;
+}
+
+button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 150px;
 }
 
 .update-button {
-  background-color: #007bff;
+  background-color: #3498db;
   color: white;
-  border: none;
-  padding: 8px 12px;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  gap: 5px; /* Adds space between text and icon */
 }
 
 .update-button:hover {
-  background-color: #0056b3;
+  background-color: #2980b9;
+  transform: translateY(-2px);
 }
 
 .delete-button {
-  background-color: #dc3545;
+  background-color: #e74c3c;
   color: white;
-  border: none;
-  padding: 8px 12px;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  gap: 5px; /* Adds space between text and icon */
 }
 
 .delete-button:hover {
-  background-color: #c82333;
+  background-color: #c0392b;
+  transform: translateY(-2px);
+}
+
+/* Adjusted responsiveness to maintain 2 columns when possible */
+@media (max-width: 768px) {
+  .rent-card {
+    width: 95%;
+    padding: 20px 15px;
+  }
+  
+  /* Switch to 1 column only on very small screens */
+  .rent-details {
+    grid-template-columns: 1fr;
+  }
+  
+  .button-container {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  button {
+    width: 100%;
+  }
+}
+
+/* Add a media query for medium screens to maintain 2 columns */
+@media (min-width: 769px) and (max-width: 992px) {
+  .rent-card {
+    width: 90%;
+    padding: 25px;
+  }
+  
+  .rent-details {
+    grid-template-columns: 1fr 1fr; /* Maintain 2 columns */
+  }
 }

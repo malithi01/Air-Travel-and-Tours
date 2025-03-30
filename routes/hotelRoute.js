@@ -5,7 +5,7 @@ const router = express.Router();
 
 //save all hotel booking details 
 
-router.post('/hotel/save', async (req, res) => {
+router.post('/hotels/save', async (req, res) => {
     try {
         let newBook = new HotelBook(req.body);
 
@@ -19,7 +19,7 @@ router.post('/hotel/save', async (req, res) => {
 
 //get all rent details
 
-router.get('/hotel', async (req, res) => { 
+router.get('/hotels', async (req, res) => { 
     try {
         const hotels = await HotelBook.find().exec();
         return res.status(200).json({ success: true, existingHotel: hotels });
@@ -30,7 +30,7 @@ router.get('/hotel', async (req, res) => {
 
 
 //update booking details
-router.put("/hotel/update/:id", async (req,res) =>{
+router.put("/hotels/update/:id", async (req,res) =>{
     try{
         await HotelBook.findByIdAndUpdate(req.params.id,{
             $set:req.body,
@@ -42,7 +42,7 @@ router.put("/hotel/update/:id", async (req,res) =>{
 });
 
 //delete
-router.delete("/hotel/delete/:id", async (req, res) => {
+router.delete("/hotels/delete/:id", async (req, res) => {
     try {
       const deletedHotelBooking = await HotelBook.findByIdAndDelete(
         req.params.id
@@ -51,6 +51,21 @@ router.delete("/hotel/delete/:id", async (req, res) => {
     } catch (err) {
       return res
         .status(400).json({ message: "Deleted unsuccessfully", error: err.message });
+    }
+  });
+
+  router.get("/hotels/:id", async (req, res) => {
+    try {
+      let hotelID = req.params.id;
+      let hotelDetails = await HotelBook.findById(hotelID);
+      if (!hotelDetails) {
+        return res
+          .status(404)
+          .json({ success: false, message: "Record not found" });
+      }
+      return res.status(200).json({ success: true, hotelDetails });
+    } catch (err) {
+      return res.status(400).json({ success: false, error: err.message });
     }
   });
   

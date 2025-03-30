@@ -52,6 +52,21 @@ router.delete("/reviews_and_rating/delete/:id", async (req, res) => {
         .json({ message: "Deleted unsuccessfully", error: err.message });
     }
   });
+
+  router.get("/reviews_and_rating/:id", async (req, res) => {
+    try {
+      let reviewID = req.params.id;
+      let ratingAndReviewDetails = await Ratings.findById(reviewID);
+      if (!ratingAndReviewDetails) {
+        return res
+          .status(404)
+          .json({ success: false, message: "Record not found" });
+      }
+      return res.status(200).json({ success: true, ratingAndReviewDetails });
+    } catch (err) {
+      return res.status(400).json({ success: false, error: err.message });
+    }
+  });
   
   
   
