@@ -336,6 +336,7 @@ const CreateRatingAndReview = () => {
               <option value="hotelBooking">Hotel Booking</option>
               <option value="carRental">Car Rental</option>
               <option value="packingAssistant">Packing Assistant</option>
+              <option value="allServices">All Services</option>
             </select>
             {formErrors.serviceType && <span className="error-text">{formErrors.serviceType}</span>}
           </div>

@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import "../stylesheets/editRent.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 
 const EditRatingAndReview = () => {
   const [name, setName] = useState("");
@@ -10,6 +13,7 @@ const EditRatingAndReview = () => {
   const [serviceType, setServiceType] = useState("");
   const [review, setReview] = useState("");
   const [rating, setRating] = useState("");
+   const [hover, setHover] = useState(0);
   const [formErrors, setFormErrors] = useState({});
 
   const { id } = useParams();
@@ -43,10 +47,13 @@ const EditRatingAndReview = () => {
       formIsValid = false;
     }
 
-    if (!email.trim() || !/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(email)) {
+    if (!email.trim()) {
+      errors.email = "Email address is required";
+      formIsValid = false;
+    } else if (!email.includes("@")) {
       errors.email = "Invalid email address";
       formIsValid = false;
-  }
+    }
 
 
     if (!date.trim()) {
@@ -101,6 +108,10 @@ const EditRatingAndReview = () => {
         navigate("/ratingAndReviewDetails");
       })
       .catch(() => console.log("Update failed!"));
+  };
+
+  const handleRatingClick = (ratingValue) => {
+    setRating(ratingValue);
   };
 
   return (
@@ -159,6 +170,7 @@ const EditRatingAndReview = () => {
               <option value="hotelBooking">Hotel Booking</option>
               <option value="carRental">Car Rental</option>
               <option value="packingAssistant">Packing Assistant</option>
+              <option value="allServices">All Services</option>
             </select>
           </div>
 
@@ -171,14 +183,31 @@ const EditRatingAndReview = () => {
             />
           </div>
 
-          <div className="editform-group">
-            <label>Rating</label>
-            <input
-              type="text"
-              value={rating}
-              onChange={(e) => setRating(e.target.value)}
-            />
-          </div>
+<div className="form-group">
+  <label>Rating</label>
+  <div className="star-rating">
+    {[...Array(5)].map((star, index) => {
+      const ratingValue = index + 1;
+      return (
+        <span
+          key={index}
+          className="star"
+          onClick={() => handleRatingClick(ratingValue)}
+          onMouseEnter={() => setHover(ratingValue)}
+          onMouseLeave={() => setHover(0)}
+        >
+          <FontAwesomeIcon 
+            icon={ratingValue <= (hover || rating) ? faStar : farStar}
+            color={ratingValue <= (hover || rating) ? "#ffc107" : "#e4e5e9"}
+            size="1x" // Changed from "lg" to "2x" for larger stars
+          />
+        </span>
+      );
+    })}
+    <span className="rating-value">{rating > 0 ? `${rating}/5` : ""}</span>
+  </div>
+  {formErrors.rating && <span className="error-text">{formErrors.rating}</span>}
+</div>
 
           <button type="submit" className="update-btn">
             Save
