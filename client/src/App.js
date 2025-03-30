@@ -9,6 +9,7 @@ import ratingAndReviewDetails from "./components/ratingAndReviewDetails";
 import CreateBookings from "./components/createBookingDetails";
 import editBookings from "./components/editBookingDetails";
 import flightBookingDashboard from "./components/flightBookingDashboard";
+import createRatingAndReview from "./components/createRatingAndReview";
 
 function App() {
   return (
@@ -25,9 +26,11 @@ function App() {
             path="/ratingAndReviewDetails"
             Component={ratingAndReviewDetails}
           />
-          <Route path="/createBooking" Component={CreateBookings} />
-          <Route path="/editBookingDetails/:id" Component={editBookings} />
-          <Route path="/flightDashboard" Component={flightBookingDashboard} />
+          <Route path="/bookings/create" Component={CreateBookings} />
+          <Route
+            path="/createRatingAndReview"
+            Component={createRatingAndReview}
+          />
         </Routes>
       </div>
     </Router>
