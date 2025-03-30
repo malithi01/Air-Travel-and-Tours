@@ -1,0 +1,176 @@
+.c-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.btn-back {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  padding: 8px 16px;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.btn-back:hover {
+  background-color: #e9ecef;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.back-link {
+  color: #495057;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.back-link:before {
+  content: "←";
+  margin-right: 8px;
+}
+
+.form-container {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+  max-width: 600px; /* Add max-width for better vertical form layout */
+  margin: 0 auto; /* Center the form container */
+}
+
+.form-title {
+  color: #2c3e50;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 10px;
+}
+
+form {
+  /* Remove grid layout and use vertical layout instead */
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5rem;
+  width: 100%; /* Make sure form groups take full width */
+}
+
+label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: #495057;
+}
+
+.input,
+select {
+  padding: 12px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  width: 100%; /* Ensure inputs take full width */
+}
+
+.input:focus,
+select:focus {
+  border-color: #3498db;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+.input-error {
+  border-color: #e74c3c;
+}
+
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 8.5L1 3.5 2.5 2l3.5 3.5L9.5 2 11 3.5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 35px;
+}
+
+input[type="datetime-local"] {
+  padding: 10.5px 12px;
+}
+
+.error-text {
+  color: #e74c3c;
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+}
+
+.btn-submit {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  margin-top: 1rem;
+  width: 100%; /* Make button take full width */
+}
+
+.btn-submit:hover {
+  background-color: #2980b9;
+}
+
+.btn-submit:active {
+  transform: translateY(1px);
+}
+
+@media (max-width: 768px) {
+  .c-container {
+    padding: 1rem;
+  }
+
+  .form-container {
+    padding: 1.5rem;
+  }
+}
+
+input:disabled {
+  background-color: #f8f9fa;
+  color: #6c757d;
+  cursor: not-allowed;
+}
+
+.star-rating {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.star {
+  cursor: pointer;
+  margin-right: 12px;
+  transition: color 0.2s ease;
+  font-size: 28px; /* Increased star size */
+}
+
+.rating-value {
+  margin-left: 15px;
+  font-weight: bold;
+  font-size: 16px; /* Slightly larger rating text */
+}
+
+textarea.input {
+  width: 100%;
+  resize: vertical;
+  font-family: inherit;
+  min-height: 100px; /* Add minimum height for better textarea usability */
+}

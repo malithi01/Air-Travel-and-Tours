@@ -43,10 +43,11 @@ const EditRatingAndReview = () => {
       formIsValid = false;
     }
 
-    if (!email.trim()) {
-      errors.email = "Email is required";
+    if (!email.trim() || !/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(email)) {
+      errors.email = "Invalid email address";
       formIsValid = false;
-    }
+  }
+
 
     if (!date.trim()) {
       errors.date = "Date is required";
