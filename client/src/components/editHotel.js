@@ -205,19 +205,6 @@ const EditHotel = () => {
                         <input
                             type="text"
                             value={phoneNumber}
-                            onChange={(e) => setEmail(e.target.value)}
-                            className={formErrors.phoneNumber ? "error" : ""}
-                        />
-                        {formErrors.phoneNumber && (
-                            <p className="editerror-message">{formErrors.phoneNumber}</p>
-                        )}
-                    </div>
-
-                    <div className="editform-group">
-                        <label>Phone Number</label>
-                        <input
-                            type="text"
-                            value={phoneNumber}
                             onChange={(e) => setPhoneNumber(e.target.value)}
                             className={formErrors.phoneNumber ? "error" : ""}
                         />
@@ -269,7 +256,7 @@ const EditHotel = () => {
                         {formErrors.guests && <p className="edit-error-message">{formErrors.guests}</p>}
                     </div>
 
-                    <div className="edit-form-group">
+                    {/* <div className="edit-form-group">
                         <label>Check-in Date</label>
                         <input type="datetime-local" value={checkInDate} onChange={(e) => setCheckInDate(e.target.value)} />
                         {formErrors.checkInDate && <p className="edit-error-message">{formErrors.checkInDate}</p>}
@@ -279,7 +266,26 @@ const EditHotel = () => {
                         <label>Check-out Date</label>
                         <input type="datetime-local" value={checkOutDate} onChange={(e) => setCheckOutDate(e.target.value)} />
                         {formErrors.checkOutDate && <p className="edit-error-message">{formErrors.checkOutDate}</p>}
+                    </div> */}
+
+                    <div className="editform-group">
+                        <label>Check In Date</label>
+                        <input
+                            type="date"  // Change type to "date" to only select the date
+                            value={checkInDate ? new Date(checkInDate).toISOString().slice(0, 10) : new Date().toISOString().slice(0, 10)}
+                            onChange={(e) => setCheckInDate(e.target.value)}
+                        />
                     </div>
+
+                    <div className="editform-group">
+                        <label>Check out Date</label>
+                        <input
+                            type="date"  // Change type to "date" to only select the date
+                            value={checkInDate ? new Date(checkOutDate).toISOString().slice(0, 10) : new Date().toISOString().slice(0, 10)}
+                            onChange={(e) => setCheckOutDate(e.target.value)}
+                        />
+                    </div>
+
 
                     <button type="submit" className="update-btn">Update</button>
                 </form>
