@@ -1,0 +1,128 @@
+/* viewRent.css */
+
+/* Overall container styling */
+.hotel-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  
+  /* Hotel card styling */
+  .hotel-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border-top: 5px solid #3498db;
+  }
+  
+  .hotel-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Hotel details styling */
+  .hotel-details {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .hotel-details dd {
+    margin: 0 0 0.8rem 0;
+    padding: 0 0 0.8rem 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.95rem;
+    color: #333;
+  }
+  
+  .hotel-details dd:last-of-type {
+    border-bottom: none;
+  }
+  
+  .hotel-details dd h4 {
+    color: #3498db;
+    font-size: 1.2rem;
+    margin: 0 0 1rem 0;
+    text-align: center;
+    padding-bottom: 0.8rem;
+    border-bottom: 2px solid #e7f4fd;
+  }
+  
+  .hotel-details dd strong {
+    font-weight: 600;
+    color: #2c3e50;
+    display: inline-block;
+    width: 35%;
+  }
+  
+  /* Button styling */
+  .update-button, .delete-button {
+    width: 48%;
+    padding: 0.8rem 0;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    margin-top: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .update-button {
+    background-color: #3498db;
+    color: white;
+    margin-right: 4%;
+  }
+  
+  .update-button:hover {
+    background-color: #2980b9;
+    transform: scale(1.02);
+  }
+  
+  .delete-button {
+    background-color: #e74c3c;
+    color: white;
+  }
+  
+  .delete-button:hover {
+    background-color: #c0392b;
+    transform: scale(1.02);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .hotel-container {
+      grid-template-columns: 1fr;
+      padding: 1rem;
+    }
+    
+    .hotel-details dd strong {
+      width: 40%;
+    }
+  }
+  
+  /* Loading state (optional) */
+  .loading-state {
+    text-align: center;
+    padding: 2rem;
+    color: #7f8c8d;
+    font-size: 1.2rem;
+  }
+  
+  /* Empty state (optional) */
+  .empty-state {
+    text-align: center;
+    padding: 3rem;
+    color: #7f8c8d;
+    font-size: 1.2rem;
+    grid-column: 1 / -1;
+  }

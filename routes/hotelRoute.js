@@ -53,6 +53,21 @@ router.delete("/hotels/delete/:id", async (req, res) => {
         .status(400).json({ message: "Deleted unsuccessfully", error: err.message });
     }
   });
+
+  router.get("/hotels/:id", async (req, res) => {
+    try {
+      let hotelID = req.params.id;
+      let hotelDetails = await HotelBook.findById(hotelID);
+      if (!hotelDetails) {
+        return res
+          .status(404)
+          .json({ success: false, message: "Record not found" });
+      }
+      return res.status(200).json({ success: true, hotelDetails });
+    } catch (err) {
+      return res.status(400).json({ success: false, error: err.message });
+    }
+  });
   
 
 module.exports = router;

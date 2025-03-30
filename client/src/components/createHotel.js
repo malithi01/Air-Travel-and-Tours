@@ -130,7 +130,7 @@ const CreateHotelDetails = () => {
     };
 
     return (
-        <div className="container">
+        <div className="hotel-container">
             <button className="btn-back">
                 <a href="/rentDetails" className="back-link">Back</a>
             </button>
