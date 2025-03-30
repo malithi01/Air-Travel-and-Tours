@@ -4,7 +4,10 @@ import "../stylesheets/createRent.css";
 
 const CreateRents = () => {
   const [carOrderid, setCarOrderId] = useState("");
-  const [destination, setDestination] = useState("");
+  const [nameOfRenter, setNameOfRenter] = useState("");
+  const [telNo, SetTelNo] = useState("");
+  const [country, setCountry] = useState("");
+  const [city, setCity] = useState("");
   const [vehicleType, setVehicleType] = useState("");
   const [pickUpLocation, setPickUpLocation] = useState("");
   const [pickUpDate, setpickUpDate] = useState("");
@@ -47,8 +50,26 @@ const CreateRents = () => {
       formIsValid = false;
     }
 
-    if (!destination.trim()) {
-      errors.destination = "Destination is required";
+    if (!nameOfRenter.trim()) {
+      errors.nameOfRenter = "Name is required";
+      formIsValid = false;
+    }
+
+    if (!telNo.trim()) {
+      errors.telNo = "Contact Number is required";
+      formIsValid = false;
+    } else if (!/^\d{10,12}$/.test(telNo)) {
+      errors.telNo = "Invalid Contact number. Must be 10-12 digits long.";
+      formIsValid = false;
+    }
+
+    if (!country.trim()) {
+      errors.country = "Country is required";
+      formIsValid = false;
+    }
+
+    if (!city.trim()) {
+      errors.city = "City is required";
       formIsValid = false;
     }
 
@@ -103,7 +124,10 @@ const CreateRents = () => {
     try {
       const newRentData = {
         carOrderid,
-        destination,
+        nameOfRenter,
+        telNo,
+        country,
+        city,
         vehicleType,
         pickUpLocation,
         pickUpDate,
@@ -128,7 +152,10 @@ const CreateRents = () => {
 
     // Reset form state
     setCarOrderId("");
-    setDestination("");
+    setNameOfRenter("");
+    SetTelNo("");
+    setCountry("");
+    setCity("");
     setVehicleType("");
     setPickUpLocation("");
     setpickUpDate("");
@@ -143,9 +170,9 @@ const CreateRents = () => {
   };
 
   return (
-    <div className="container">
+    <div className="c-container">
       <button className="btn-back">
-        <a href="/rentDetails" className="back-link">
+        <a href="/carDashboard" className="back-link">
           Back
         </a>
       </button>
@@ -159,17 +186,55 @@ const CreateRents = () => {
               <span className="error-text">{formErrors.carOrderid}</span>
             )}
           </div>
-
           <div className="form-group">
-            <label>Destination</label>
+            <label>Full Name</label>
             <input
               type="text"
-              className={`input ${formErrors.destination && "input-error"}`}
-              onChange={(e) => setDestination(e.target.value)}
-              value={destination}
+              className={`input ${formErrors.nameOfRenter && "input-error"}`}
+              onChange={(e) => setNameOfRenter(e.target.value)}
+              value={nameOfRenter}
             />
-            {formErrors.destination && (
-              <span className="error-text">{formErrors.destination}</span>
+            {formErrors.nameOfRenter && (
+              <span className="error-text">{formErrors.nameOfRenter}</span>
+            )}
+          </div>
+
+          <div className="form-group">
+            <label>Contact Number</label>
+            <input
+              type="text"
+              className={`input ${formErrors.telNo && "input-error"}`}
+              onChange={(e) => SetTelNo(e.target.value)}
+              value={telNo}
+            />
+            {formErrors.telNo && (
+              <span className="error-text">{formErrors.telNo}</span>
+            )}
+          </div>
+
+          <div className="form-group">
+            <label>Country</label>
+            <input
+              type="text"
+              className={`input ${formErrors.country && "input-error"}`}
+              onChange={(e) => setCountry(e.target.value)}
+              value={country}
+            />
+            {formErrors.country && (
+              <span className="error-text">{formErrors.country}</span>
+            )}
+          </div>
+
+          <div className="form-group">
+            <label>City</label>
+            <input
+              type="text"
+              className={`input ${formErrors.city && "input-error"}`}
+              onChange={(e) => setCity(e.target.value)}
+              value={city}
+            />
+            {formErrors.city && (
+              <span className="error-text">{formErrors.city}</span>
             )}
           </div>
 

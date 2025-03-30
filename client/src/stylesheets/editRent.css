@@ -1,69 +1,234 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-  }
-  
+/* Modern Edit Car Rental Form Styling - Light Color Scheme */
+:root {
+  --primary-color: #5fa8d3; /* Soft blue */
+  --primary-hover: #4a86b8; /* Deeper blue for hover */
+  --accent-color: #75c8ae; /* Soft teal/mint green */
+  --accent-hover: #5cad93; /* Deeper teal for hover */
+  --background: #edf5fa; /* Light off-white background */
+  --card-background: #ffffff; /* White card background */
+  --text-primary: #3a4a5a; /* Dark blue-gray for main text */
+  --text-secondary: #6a7a8a; /* Lighter blue-gray for secondary text */
+  --border-light: #e8ecef; /* Very light gray for borders */
+  --error-color: #e57373; /* Soft red for errors */
+  --error-hover: #ef5350; /* Slightly stronger red for hover */
+  --success-background: rgba(
+    117,
+    200,
+    174,
+    0.15
+  ); /* Very light teal for focus states */
+}
+
+/* body {
+  background: linear-gradient(135deg, #d0e8ff 0%, #90c7ff 100%);
+  min-height: 100vh;
+  margin: 0;
+  padding: 20px;
+} */
+
+.editcontainer {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 25px;
+  background-color: var(--card-background);
+  border-radius: 12px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-light);
+}
+
+/* Form container with subtle background */
+.editcontainer > div {
+  padding: 15px;
+  background-color: var(--background);
+  border-radius: 8px;
+  margin-top: 20px;
+  border: 1px solid var(--border-light);
+}
+
+/* Title styling */
+.edittitle {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2.2rem;
+  color: var(--text-primary);
+  font-weight: 700;
+  position: relative;
+}
+
+.edittitle:after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background-color: var(--accent-color);
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+
+/* Back button styling */
+.btn-back {
+  background-color: var(--primary-color);
+  padding: 10px 20px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
+
+.back-link {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.back-link:before {
+  content: "←";
+  margin-right: 5px;
+}
+
+.btn-back:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Group Styling */
+.editform-group {
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.editform-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+.editform-group input {
+  width: 95%;
+  padding: 10px 15px;
+  margin: 3px 0;
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: var(--card-background);
+  color: var(--text-primary);
+}
+
+.editform-group select{
+  width: 99%;
+  padding: 12px 15px;
+  margin: 5px 0;
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: var(--card-background);
+  color: var(--text-primary);
+}
+
+.editform-group input:focus,
+.editform-group select:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px var(--success-background);
+  outline: none;
+}
+
+.editform-group input.error,
+.editform-group select.error {
+  border-color: var(--error-color);
+}
+
+.editform-group input.error:focus,
+.editform-group select.error:focus {
+  box-shadow: 0 0 0 3px rgba(229, 115, 115, 0.2);
+}
+
+/* Error message styling */
+.editerror-message,
+.error-text {
+  color: var(--error-color);
+  font-size: 0.85rem;
+  display: block;
+  margin-top: 5px;
+  font-weight: 500;
+}
+
+/* Select input styling */
+.editform-group select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236a7a8a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  padding-right: 40px;
+}
+
+/* Date input specific styling */
+input[type="datetime-local"] {
+  padding-right: 10px;
+}
+
+/* Update Button Styling */
+.update-btn {
+  background-color: var(--accent-color);
+  color: white;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 6px;
+  width: 100%;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+  box-shadow: 0 4px 6px rgba(117, 200, 174, 0.2);
+}
+
+.update-btn:hover {
+  background-color: var(--accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(117, 200, 174, 0.3);
+}
+
+.update-btn:active {
+  transform: translateY(1px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
   .editcontainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
-  
-  .editcard {
-    background: white;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 500px;
+    margin: 20px 15px;
   }
-  
+
   .edittitle {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 22px;
+    font-size: 1.8rem;
   }
-  
-  .editform-group {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  input,
-  select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  input.error {
-    border: 1px solid red;
-  }
-  
-  .editerror-message {
-    color: red;
-    font-size: 12px;
-  }
-  
+
+  .editform-group input,
+  .editform-group select,
   .update-btn {
-    width: 100%;
-    background-color: green;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
+    padding: 10px 12px;
   }
-  
-  .update-btn:hover {
-    background-color: darkgreen;
-  }
-  
+}
+
+/* Disabled input styling */
+.editform-group input[disabled] {
+  background-color: var(--background);
+  color: var(--text-secondary);
+  cursor: not-allowed;
+}
+
+/* Optional: focus styling for entire form group */
+.editform-group:focus-within label {
+  color: var(--accent-color);
+}

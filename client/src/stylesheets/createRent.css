@@ -1,80 +1,186 @@
-/* Container for the form */
-.container {
-    max-width: 800px;
-    margin: 40px auto;
+/* Modern Car Rental Form Styling */
+.c-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Form container with subtle background */
+.form-container {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+/* Title styling */
+.form-title {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2.2rem;
+  color: #2c3e50;
+  font-weight: 700;
+  position: relative;
+}
+
+.form-title:after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background-color: #28a745;
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+
+/* Back button styling */
+.btn-back {
+  background-color: #3498db;
+  padding: 10px 20px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.back-link {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.back-link:before {
+  content: '←';
+  margin-right: 5px;
+}
+
+.btn-back:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Form Group Styling */
+.form-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #34495e;
+  font-size: 0.95rem;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 5px 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: #fff;
+}
+
+.input:focus {
+  border-color: #28a745;
+  box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.2);
+  outline: none;
+}
+
+.input-error {
+  border-color: #e74c3c;
+}
+
+.input-error:focus {
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+}
+
+/* Error message styling */
+.error-text {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  display: block;
+  margin-top: 5px;
+  font-weight: 500;
+}
+
+/* Select input styling */
+select.input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  padding-right: 40px;
+}
+
+/* Date input specific styling */
+input[type="datetime-local"] {
+  padding-right: 10px;
+}
+
+/* Submit Button Styling */
+.btn-submit {
+  background-color: #28a745;
+  color: white;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 6px;
+  width: 100%;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+  box-shadow: 0 4px 6px rgba(40, 167, 69, 0.2);
+}
+
+.btn-submit:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(40, 167, 69, 0.3);
+}
+
+.btn-submit:active {
+  transform: translateY(1px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .c-container {
     padding: 20px;
-    background-color: #f7f7f7;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 20px 15px;
   }
   
-  /* Title styling */
   .form-title {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
   
-  /* Button styling for Back */
-  .btn-back {
-    background-color: #28a745;
-    padding: 10px 20px;
-    border: none;
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
+  .input, .btn-submit {
+    padding: 10px 12px;
   }
-  
-  .back-link {
-    color: white;
-    text-decoration: none;
-  }
-  
-  .btn-back:hover {
-    background-color: #218838;
-  }
-  
-  /* Form Group Styling */
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  .input {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .input-error {
-    border-color: red;
-  }
-  
-  /* Error message styling */
-  .error-text {
-    color: red;
-    font-size: 0.875rem;
-  }
-  
-  /* Submit Button Styling */
-  .btn-submit {
-    background-color: #28a745;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    width: 100%;
-    cursor: pointer;
-  }
-  
-  .btn-submit:hover {
-    background-color: #218838;
-  }
-  
+}
+
+/* Disabled input styling */
+input[disabled] {
+  background-color: #f5f5f5;
+  color: #666;
+  cursor: not-allowed;
+}
+
+/* Optional: focus styling for entire form group */
+.form-group:focus-within label {
+  color: #28a745;
+}
