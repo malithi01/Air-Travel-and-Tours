@@ -77,6 +77,22 @@ const ViewBookingDetails = () => {
               {booking.paymentMethod || "Loading..."}
             </dd>
           </dl>
+
+          <div className="button-container">
+            <button
+              className="update-button"
+              onClick={() => navigate(`/editBookingDetails/${booking._id}`)}
+            >
+              📝 Update Booking
+            </button>
+
+            <button
+              className="delete-button"
+              onClick={() => handleDelete(booking._id)}
+            >
+              🗑️ Cancel Booking
+            </button>
+          </div>
         </div>
       ))}
     </div>

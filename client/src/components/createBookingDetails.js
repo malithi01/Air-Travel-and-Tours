@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const CreateBookings = () => {
@@ -15,6 +15,31 @@ const CreateBookings = () => {
   const [ticketPrice, setTicketPrice] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
   const [formErrors, setFormErrors] = useState({});
+
+  // Fetch the latest booing ID and generate the next one
+  const fetchLatestBookingId = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/booking/latest");
+      const latestBookingId = response.data.latestBookingId;
+
+      if (latestBookingId) {
+        // Extract the numeric part, increment and pad with zeros
+        const numericPart = parseInt(latestBookingId.slice(1), 10) + 1;
+        const newBookingId = `R${numericPart.toString().padStart(3, "0")}`;
+        setBookingId(newBookingId);
+      } else {
+        // If none exists, start with R001
+        setBookingId("R001");
+      }
+    } catch (error) {
+      console.error("Error fetching latest booking ID:", error);
+      setBookingId("R001"); // fallback
+    }
+  };
+
+  useEffect(() => {
+    fetchLatestBookingId();
+  }, []);
 
   // Validating form details
   const validateForm = () => {
@@ -312,6 +337,6 @@ const CreateBookings = () => {
       </div>
     </div>
   );
-}
+};
 
 export default CreateBookings;

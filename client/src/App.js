@@ -10,10 +10,11 @@ import carDashboard from "./components/carDashboard";
 import CreateHotel from "./components/createHotel";
 import EditHotel from "./components/editHotel";
 import CreateBookings from "./components/createBookingDetails";
+import editBookings from "./components/editBookingDetails";
+import flightBookingDashboard from "./components/flightBookingDashboard";
 import createRatingAndReview from "./components/createRatingAndReview";
 import hotelDashboard from "./components/hotelDashboard";
 import editRatingAndReviews from "./components/editRatingAndReviews";        
-
 
 function App() {
   return (
@@ -30,6 +31,16 @@ function App() {
           <Route path="/createHotel" Component={CreateHotel}/>
           <Route path="/editHotel/:id" Component={EditHotel}/>
           <Route path="/bookings/details" Component={bookingDetails} />
+          <Route path="/viewHotel" Component={viewHotel} />
+          <Route
+            path="/ratingAndReviewDetails"
+            Component={ratingAndReviewDetails}
+          />
+          <Route path="/bookings/create" Component={CreateBookings} />
+          <Route
+            path="/createRatingAndReview"
+            Component={createRatingAndReview}
+          />
           <Route path="/viewHotel" Component={viewHotel}/>
           <Route path="/ratingAndReviewDetails" Component={ratingAndReviewDetails} />
           <Route path="/carDashboard" Component={carDashboard} />
