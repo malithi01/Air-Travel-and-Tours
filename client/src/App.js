@@ -7,8 +7,8 @@ import bookingDetails from "./components/bookingDetails";
 import viewHotel from "./components/viewHotel";
 import ratingAndReviewDetails from "./components/ratingAndReviewDetails";
 import CreateBookings from "./components/createBookingDetails";
-        
-
+import editBookings from "./components/editBookingDetails";
+import flightBookingDashboard from "./components/flightBookingDashboard";
 
 function App() {
   return (
@@ -20,10 +20,14 @@ function App() {
           <Route path="/createRents" Component={createRents} />
           <Route path="/editRents/:id" Component={editRents} />
           <Route path="/bookings/details" Component={bookingDetails} />
-          <Route path="/viewHotel" Component={viewHotel}/>
-          <Route path="/ratingAndReviewDetails" Component={ratingAndReviewDetails} />
-          <Route path="/bookings/create" Component={CreateBookings} />
-
+          <Route path="/viewHotel" Component={viewHotel} />
+          <Route
+            path="/ratingAndReviewDetails"
+            Component={ratingAndReviewDetails}
+          />
+          <Route path="/createBooking" Component={CreateBookings} />
+          <Route path="/editBookingDetails/:id" Component={editBookings} />
+          <Route path="/flightDashboard" Component={flightBookingDashboard} />
         </Routes>
       </div>
     </Router>
