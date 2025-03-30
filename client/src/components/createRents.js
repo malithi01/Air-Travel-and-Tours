@@ -172,7 +172,7 @@ const CreateRents = () => {
   return (
     <div className="c-container">
       <button className="btn-back">
-        <a href="/rentDetails" className="back-link">
+        <a href="/carDashboard" className="back-link">
           Back
         </a>
       </button>
