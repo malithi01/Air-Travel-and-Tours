@@ -56,7 +56,7 @@ export default class header extends Component {
                 style={{ marginRight: "50px", marginLeft: "200px" }}
               >
                 <li>
-                  <a href="/viewProductCnt">Packing assistant</a>
+                  <a href="/packingForm">Packing assistant</a>
                 </li>
               </div>
             </ul>
