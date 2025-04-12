@@ -1,0 +1,182 @@
+/* Packing Assistant Styles */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
+
+.packing-form {
+  font-family: 'Nunito', sans-serif;
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background: linear-gradient(to bottom right, #ffffff, #f7f9fc);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  color: #2c3e50;
+  border-top: 5px solid #3498db;
+}
+
+.packing-form h2 {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 30px;
+  color: #2980b9;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.packing-form form > div {
+  margin-bottom: 24px;
+}
+
+.packing-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #34495e;
+  font-size: 16px;
+}
+
+.packing-form select,
+.packing-form input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #e0e6ed;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #2c3e50;
+  background-color: white;
+  transition: all 0.3s ease;
+  font-family: 'Nunito', sans-serif;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.packing-form select:focus,
+.packing-form input:focus {
+  border-color: #3498db;
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
+  outline: none;
+}
+
+.packing-form button {
+  width: 100%;
+  padding: 16px;
+  margin-top: 10px;
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(41, 128, 185, 0.2);
+}
+
+.packing-form button:hover {
+  background: linear-gradient(135deg, #2980b9, #1c6394);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(41, 128, 185, 0.3);
+}
+
+.packing-form button:disabled {
+  background: linear-gradient(135deg, #95a5a6, #7f8c8d);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.packing-form h3 {
+  margin-top: 30px;
+  font-size: 24px;
+  color: #2980b9;
+  border-bottom: 2px solid #e0e6ed;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+/* Results Styling */
+.packing-form div:last-child {
+  background-color: #f8fcff;
+  border-radius: 10px;
+  padding: 20px;
+  margin-top: 25px;
+  border-left: 5px solid #3498db;
+}
+
+.packing-form div:last-child p {
+  line-height: 1.6;
+  white-space: pre-line;
+  margin: 0;
+  font-size: 16px;
+}
+
+/* Error Message */
+.packing-form p[style*="color: red"] {
+  background-color: #fff5f5;
+  border-left: 4px solid #e74c3c;
+  padding: 10px 15px;
+  border-radius: 4px;
+  margin: 15px 0;
+  font-weight: 500;
+}
+
+/* Animation for loading state */
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
+.packing-form button:disabled {
+  animation: pulse 1.5s infinite;
+}
+
+/* Custom Scrollbar for Select Dropdown */
+select::-webkit-scrollbar {
+  width: 8px;
+}
+
+select::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+select::-webkit-scrollbar-thumb {
+  background: #c1d1e0;
+  border-radius: 4px;
+}
+
+select::-webkit-scrollbar-thumb:hover {
+  background: #a3b8cc;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .packing-form {
+    margin: 20px;
+    padding: 20px;
+  }
+  
+  .packing-form h2 {
+    font-size: 28px;
+  }
+  
+  .packing-form button {
+    padding: 14px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .packing-form {
+    padding: 16px;
+  }
+  
+  .packing-form h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .packing-form select,
+  .packing-form input {
+    padding: 12px;
+  }
+}

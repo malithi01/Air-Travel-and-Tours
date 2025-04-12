@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "../stylesheets/packingAssistant.css";
 
 const PackingForm = () => {
   const [tripType, setTripType] = useState("");
