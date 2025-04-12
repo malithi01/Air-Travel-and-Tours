@@ -209,7 +209,7 @@ const EditRents = () => {
               )}
             </div>
 
-            <div className="editform-group">
+            {/* <div className="editform-group">
               <label>Country</label>
               <input
                 type="text"
@@ -220,6 +220,19 @@ const EditRents = () => {
               {formErrors.country && (
                 <p className="editerror-message">{formErrors.country}</p>
               )}
+            </div> */}
+
+            <div className="editform-group">
+              <label>Country</label>
+              <select
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+              >
+                <option value="">Select a Country</option>
+                <option value="Sri Lanka">Sri Lanka</option>
+                <option value="Bali">Bali</option>
+                <option value="Thailand">Thailand</option>
+              </select>
             </div>
 
             <div className="editform-group">

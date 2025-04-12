@@ -67,7 +67,7 @@
 
 /* Back button styling */
 .btn-back {
-  background-color: var(--primary-color);
+  background-color: darkblue;
   padding: 10px 20px;
   border: none;
   color: white;
@@ -85,10 +85,10 @@
   align-items: center;
 }
 
-.back-link:before {
+/* .back-link:before {
   content: "←";
   margin-right: 5px;
-}
+} */
 
 .btn-back:hover {
   background-color: var(--primary-hover);
@@ -179,7 +179,7 @@ input[type="datetime-local"] {
 
 /* Update Button Styling */
 .update-btn {
-  background-color: var(--accent-color);
+  background-color: darkblue;
   color: white;
   padding: 14px 20px;
   border: none;
@@ -190,13 +190,13 @@ input[type="datetime-local"] {
   font-weight: 600;
   transition: all 0.3s ease;
   margin-top: 10px;
-  box-shadow: 0 4px 6px rgba(117, 200, 174, 0.2);
+  box-shadow: 0 4px 6px rgba(44, 3, 247, 0.2);
 }
 
 .update-btn:hover {
-  background-color: var(--accent-hover);
+  background-color: rgb(54, 54, 200);
   transform: translateY(-2px);
-  box-shadow: 0 6px 10px rgba(117, 200, 174, 0.3);
+  box-shadow: 0 6px 10px rgba(38, 7, 196, 0.2);
 }
 
 .update-btn:active {
