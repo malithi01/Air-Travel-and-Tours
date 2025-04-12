@@ -11,6 +11,7 @@ import CreateHotel from "./components/createHotel";
 import EditHotel from "./components/editHotel";
 import CreateBookings from "./components/createBookingDetails";
 import createRatingAndReview from "./components/createRatingAndReview";
+import packingForm from "./components/packingForm";
         
 
 
@@ -34,6 +35,7 @@ function App() {
           <Route path="/carDashboard" Component={carDashboard} />
           <Route path="/bookings/create" Component={CreateBookings} />
           <Route path="/createRatingAndReview" Component={createRatingAndReview} />
+          <Route path="/packingForm" Component={packingForm} />
         </Routes>
       </div>
     </Router>
