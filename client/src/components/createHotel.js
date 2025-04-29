@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+// Update the import path to match your project structure
+import "../stylesheets/createHotel.css";
 
 const CreateHotelDetails = () => {
     const [hotelBookingID, setHotelBookingID] = useState("");
@@ -14,6 +16,7 @@ const CreateHotelDetails = () => {
     const [checkOutDate, setCheckOutDate] = useState("");
     const [formErrors, setFormErrors] = useState({});
 
+    // Validation function stays the same
     const validateForm = () => {
         const errors = {};
         let formIsValid = true;
@@ -88,6 +91,7 @@ const CreateHotelDetails = () => {
         return formIsValid;
     };
 
+    // Form submission function stays the same
     const sendData = async (e) => {
         e.preventDefault();
 
@@ -130,79 +134,158 @@ const CreateHotelDetails = () => {
     };
 
     return (
-        <div className="hotel-container">
-            <button className="btn-back">
-                <a href="/rentDetails" className="back-link">Back</a>
-            </button>
-            <div className="form-container">
-                <h1 className="form-title">Hotel Booking</h1>
-                <form onSubmit={sendData}>
-                    <div className="form-group">
-                        <label>Hotel Booking ID</label>
-                        <input type="text" className="input" value={hotelBookingID} onChange={(e) => setHotelBookingID(e.target.value)} />
-                        {formErrors.hotelBookingID && <span className="error-text">{formErrors.hotelBookingID}</span>}
+        <div className="hotel-booking-container">
+            <div className="hotel-booking-form-wrapper">
+                <a href="/hotelDashBoard" className="hotel-booking-back-btn">
+                    <span className="hotel-booking-back-link">Back</span>
+                </a>
+                
+                <h1 className="hotel-booking-title">Hotel Booking</h1>
+                
+                <form onSubmit={sendData}className="hotelForm">
+                    <div className="hotel-booking-form-group">
+                        <label className="hotel-booking-label">Hotel Booking ID</label>
+                        <input 
+                            type="text" 
+                            className="hotel-booking-input-12" 
+                            value={hotelBookingID} 
+                            onChange={(e) => setHotelBookingID(e.target.value)} 
+                            placeholder="Enter booking ID"
+                        />
+                        {formErrors.hotelBookingID && 
+                            <span className="hotel-booking-error">{formErrors.hotelBookingID}</span>
+                        }
+                    </div>
+                    
+
+                    <div className="hotel-booking-form-group">
+                        <label className="hotel-booking-label">Full Name</label>
+                        <input 
+                            type="text" 
+                            className="hotel-booking-input-12" 
+                            value={fullName} 
+                            onChange={(e) => setFullName(e.target.value)} 
+                            placeholder="Enter your full name"
+                        />
+                        {formErrors.fullName && 
+                            <span className="hotel-booking-error">{formErrors.fullName}</span>
+                        }
                     </div>
 
-                    <div className="form-group">
-                        <label>Full Name</label>
-                        <input type="text" className="input" value={fullName} onChange={(e) => setFullName(e.target.value)} />
-                        {formErrors.fullName && <span className="error-text">{formErrors.fullName}</span>}
+                    <div className="hotel-booking-form-group">
+                        <label className="hotel-booking-label">Email</label>
+                        <input 
+                            type="email" 
+                            className="hotel-booking-input-12" 
+                            value={email} 
+                            onChange={(e) => setEmail(e.target.value)} 
+                            placeholder="Enter your email address"
+                        />
+                        {formErrors.email && 
+                            <span className="hotel-booking-error">{formErrors.email}</span>
+                        }
                     </div>
 
-                    <div className="form-group">
-                        <label>Email</label>
-                        <input type="email" className="input" value={email} onChange={(e) => setEmail(e.target.value)} />
-                        {formErrors.email && <span className="error-text">{formErrors.email}</span>}
+                    <div className="hotel-booking-form-group">
+                        <label className="hotel-booking-label">Phone Number</label>
+                        <input 
+                            type="tel" 
+                            className="hotel-booking-input-12" 
+                            value={phoneNumber} 
+                            onChange={(e) => setPhoneNumber(e.target.value)} 
+                            placeholder="Enter your 10-digit phone number"
+                        />
+                        {formErrors.phoneNumber && 
+                            <span className="hotel-booking-error">{formErrors.phoneNumber}</span>
+                        }
                     </div>
 
-                    <div className="form-group">
-                        <label>Phone Number</label>
-                        <input type="number" className="input" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
-                        {formErrors.phoneNumber && <span className="error-text">{formErrors.phoneNumber}</span>}
+                    <div className="hotel-booking-form-group">
+                        <label className="hotel-booking-label">Address</label>
+                        <input 
+                            type="text" 
+                            className="hotel-booking-input-12" 
+                            value={address} 
+                            onChange={(e) => setAddress(e.target.value)} 
+                            placeholder="Enter your address"
+                        />
+                        {formErrors.address && 
+                            <span className="hotel-booking-error">{formErrors.address}</span>
+                        }
                     </div>
 
-                    <div className="form-group">
-                        <label>Address</label>
-                        <input type="text" className="input" value={address} onChange={(e) => setAddress(e.target.value)} />
-                        {formErrors.address && <span className="error-text">{formErrors.address}</span>}
+                    <div className="hotel-booking-form-group">
+                        <label className="hotel-booking-label">Hotel</label>
+                        <input 
+                            type="text" 
+                            className="hotel-booking-input-12" 
+                            value={hotel} 
+                            onChange={(e) => setHotel(e.target.value)} 
+                            placeholder="Enter hotel name"
+                        />
+                        {formErrors.hotel && 
+                            <span className="hotel-booking-error">{formErrors.hotel}</span>
+                        }
                     </div>
 
-                    <div className="form-group">
-                        <label>Hotel</label>
-                        <input type="text" className="input" value={hotel} onChange={(e) => setHotel(e.target.value)} />
-                        {formErrors.hotel && <span className="error-text">{formErrors.hotel}</span>}
-                    </div>
-
-                    <div className="form-group">
-                        <label>Room Type</label>
-                        <select className="input" value={roomType} onChange={(e) => setRoomType(e.target.value)}>
+                    <div className="hotel-booking-form-group">
+                        <label className="hotel-booking-label">Room Type</label>
+                        <select 
+                            className="hotel-booking-select" 
+                            value={roomType} 
+                            onChange={(e) => setRoomType(e.target.value)}
+                        >
                             <option value="">Select a Room type</option>
                             <option value="single">Single</option>
                             <option value="family">Family</option>
                             <option value="group">Group</option>
                         </select>
-                        {formErrors.roomType && <span className="error-text">{formErrors.roomType}</span>}
+                        {formErrors.roomType && 
+                            <span className="hotel-booking-error">{formErrors.roomType}</span>
+                        }
                     </div>
 
-                    <div className="form-group">
-                        <label>Guests</label>
-                        <input type="number" className="input" value={guests} onChange={(e) => setGuests(e.target.value)} />
-                        {formErrors.guests && <span className="error-text">{formErrors.guests}</span>}
+                    <div className="hotel-booking-form-group">
+                        <label className="hotel-booking-label">Guests</label>
+                        <input 
+                            type="number" 
+                            className="hotel-booking-input-12" 
+                            value={guests} 
+                            onChange={(e) => setGuests(e.target.value)} 
+                            placeholder="Enter number of guests"
+                        />
+                        {formErrors.guests && 
+                            <span className="hotel-booking-error">{formErrors.guests}</span>
+                        }
                     </div>
 
-                    <div className="form-group">
-                        <label>Check-in Date</label>
-                        <input type="date" className="input" value={checkInDate} onChange={(e) => setCheckInDate(e.target.value)} />
-                        {formErrors.checkInDate && <span className="error-text">{formErrors.checkInDate}</span>}
+                    <div className="hotel-booking-form-group">
+                        <label className="hotel-booking-label">Check-in Date</label>
+                        <input 
+                            type="date" 
+                            className="hotel-booking-input-12" 
+                            value={checkInDate} 
+                            onChange={(e) => setCheckInDate(e.target.value)} 
+                        />
+                        {formErrors.checkInDate && 
+                            <span className="hotel-booking-error">{formErrors.checkInDate}</span>
+                        }
                     </div>
 
-                    <div className="form-group">
-                        <label>Check-out Date</label>
-                        <input type="date" className="input" value={checkOutDate} onChange={(e) => setCheckOutDate(e.target.value)} />
-                        {formErrors.checkOutDate && <span className="error-text">{formErrors.checkOutDate}</span>}
+                    <div className="hotel-booking-form-group">
+                        <label className="hotel-booking-label">Check-out Date</label>
+                        <input 
+                            type="date" 
+                            className="hotel-booking-input-12" 
+                            value={checkOutDate} 
+                            onChange={(e) => setCheckOutDate(e.target.value)} 
+                        />
+                        {formErrors.checkOutDate && 
+                            <span className="hotel-booking-error">{formErrors.checkOutDate}</span>
+                        }
                     </div>
 
-                    <button type="submit" className="btn-submit">Save</button>
+                    <button type="submit" className="hotel-booking-submit-btn">Save Booking</button>
                 </form>
             </div>
         </div>

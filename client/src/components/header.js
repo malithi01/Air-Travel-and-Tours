@@ -23,7 +23,7 @@ export default class header extends Component {
                 style={{ marginRight: "50px", marginLeft: "0px" }}
               >
                 <li>
-                  <a class="active" href="/viewProduct">
+                  <a class="active" href="/hotelDashboard">
                     Hotel Booking
                   </a>
                 </li>
