@@ -66,8 +66,21 @@ const CreateBookings = () => {
       formIsValid = false;
     }
 
+    if (!contactNumber.trim() || !/^\d{10}$/.test(contactNumber)) {
+      errors.contactNumber = "Conatct number must be 10 digits";
+      formIsValid = false;
+    }
+
     if (!emailAddress.trim()) {
       errors.emailAddress = "Email address is required";
+      formIsValid = false;
+    }
+
+    if (
+      !emailAddress.trim() ||
+      !/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(emailAddress)
+    ) {
+      errors.emailAddress = "Invalid email address";
       formIsValid = false;
     }
 
@@ -167,7 +180,7 @@ const CreateBookings = () => {
   return (
     <div className="container">
       <button className="btn-back">
-        <a href="/bookingDetails" className="back-link">
+        <a href="/flightDashboard" className="back-link">
           Back
         </a>
       </button>
@@ -293,6 +306,7 @@ const CreateBookings = () => {
 
           <div className="form-group">
             <label>Seat Type</label>
+
             <input
               type="text"
               className={`input ${formErrors.seatType && "input-error"}`}

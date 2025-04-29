@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "../stylesheets/bookingDetails.css";
 
 const ViewBookingDetails = () => {
   const [BookingDetails, setBookings] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getBookingDetails = async () => {
@@ -23,8 +26,42 @@ const ViewBookingDetails = () => {
     getBookingDetails();
   }, []);
 
+  //implementing handleDelete function
+  const handleDelete = async (id) => {
+    try {
+      const confirmed = window.confirm(
+        "Are you sure you want to cancel this booking?"
+      );
+      if (confirmed) {
+        await axios
+          .delete(`http://localhost:8000/booking/delete/${id}`)
+          .then((res) => {
+            alert(res.data.message);
+            console.log(res.data.message);
+            setBookings(BookingDetails.filter((booking) => booking._id !== id));
+          })
+          .catch((err) => {
+            if (err.response) {
+              console.log(err.response.data.message);
+            } else {
+              console.log("Error occured while processing your axios delete");
+            }
+          });
+      } else {
+        alert("Deletion cancelled!");
+      }
+    } catch (err) {
+      console.log("handleDelete function failed! ERROR: " + err.message);
+    }
+  };
+
   return (
     <div className="d-flex flex-column align-items-center">
+      <button className="btn-back">
+        <a href="/flightDashboard" className="back-link">
+          Back
+        </a>
+      </button>
       {BookingDetails.map((booking, index) => (
         <div
           key={index}

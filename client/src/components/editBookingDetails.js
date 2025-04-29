@@ -45,20 +45,20 @@ const EditBookings = () => {
     const errors = {};
     let formIsValid = true;
 
-    if (!bookingid.trim()) {
-      errors.bookingid = "booking ID is required";
-      formIsValid = false;
-    }
+    // if (!bookingid.trim()) {
+    //   errors.bookingid = "booking ID is required";
+    //   formIsValid = false;
+    // }
 
     if (!fullName.trim()) {
       errors.fullName = "Full name is required";
       formIsValid = false;
     }
 
-    if (!age.trim()) {
-      errors.age = "Age is required";
-      formIsValid = false;
-    }
+    // if (!age.trim()) {
+    //   errors.age = "Age is required";
+    //   formIsValid = false;
+    // }
 
     if (!contactNumber.trim()) {
       errors.contactNumber = "Contact Number is required";
@@ -85,10 +85,10 @@ const EditBookings = () => {
       formIsValid = false;
     }
 
-    if (!noOfPassengers.trim()) {
-      errors.noOfPassengers = "No Of Passengers is required";
-      formIsValid = false;
-    }
+    // if (!noOfPassengers.trim()) {
+    //   errors.noOfPassengers = "No Of Passengers is required";
+    //   formIsValid = false;
+    // }
 
     if (!seatType.trim()) {
       errors.seatType = "Seat Type is required";
@@ -147,7 +147,7 @@ const EditBookings = () => {
       <div className="editcard">
         <h2 className="edittitle">Update Booing Details</h2>
         <form onSubmit={updateData}>
-          <div className="editform-group">
+          {/* <div className="editform-group">
             <label>Booking ID</label>
             <input
               type="text"
@@ -158,7 +158,7 @@ const EditBookings = () => {
             {formErrors.bookingid && (
               <p className="editerror-message">{formErrors.bookingid}</p>
             )}
-          </div>
+          </div> */}
 
           <div className="editform-group">
             <label>Full Name</label>

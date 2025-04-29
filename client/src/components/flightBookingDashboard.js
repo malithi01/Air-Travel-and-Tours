@@ -1,52 +1,174 @@
-// import React from "react";
-// import { Card, CardContent } from "@/components/ui/card";
-// import { motion } from "framer-motion";
+import React, { useState } from "react";
+import "./../stylesheets/flightBookingDashboard.css";
+import Header from "./header";
+import Footer from "./footer";
 
-// const airlines = [
-//   {
-//     name: "Emirates",
-//     image:
-//       "https://i.pinimg.com/736x/3c/cb/2e/3ccb2e17f7110efe044513a9da1cc1ed.jpg", // Replace with actual image URL
-//     description:
-//       "Experience luxury and comfort with Emirates flights worldwide.",
-//   },
-//   {
-//     name: "Qatar Airways",
-//     image:
-//       "https://i.pinimg.com/736x/3c/cb/2e/3ccb2e17f7110efe044513a9da1cc1ed.jpg", // Replace with actual image URL
-//     description: "Fly with Qatar Airways for exceptional service and quality.",
-//   },
-//   {
-//     name: "Singapore Airlines",
-//     image:
-//       "https://i.pinimg.com/736x/3c/cb/2e/3ccb2e17f7110efe044513a9da1cc1ed.jpg", // Replace with actual image URL
-//     description: "Award-winning in-flight experience awaits you.",
-//   },
-// ];
+export default function FlightBookingDashboard() {
+  const [searchParams, setSearchParams] = useState({});
 
-// export default function FlightDashboard() {
-//   return (
-//     <div className="p-6 bg-gray-100 min-h-screen">
-//       <h1 className="text-3xl font-bold text-center mb-6">
-//         Flight Booking Dashboard
-//       </h1>
-//       <div className="grid md:grid-cols-3 gap-6">
-//         {airlines.map((airline, index) => (
-//           <motion.div key={index} whileHover={{ scale: 1.05 }} className="p-4">
-//             <Card className="rounded-2xl overflow-hidden shadow-lg">
-//               <img
-//                 src={airline.image}
-//                 alt={airline.name}
-//                 className="w-full h-40 object-cover"
-//               />
-//               <CardContent className="p-4">
-//                 <h2 className="text-xl font-semibold">{airline.name}</h2>
-//                 <p className="text-gray-600 mt-2">{airline.description}</p>
-//               </CardContent>
-//             </Card>
-//           </motion.div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setSearchParams((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const airlines = [
+    {
+      id: 1,
+      name: "Emirates",
+      logo: "./images/Emirates_logo.svg.png",
+    },
+    {
+      id: 2,
+      name: "Quater",
+      logo: "./images/images.png",
+    },
+    {
+      id: 3,
+      name: "Sri Lankan",
+      logo: "./images/sri-lankan-airlines-logo-png_seeklogo-131159.png",
+    },
+  ];
+
+  return (
+    <div>
+      <Header />
+      <div className="flight-dashboard">
+        <div className="dashboard-header">
+          <h1>Flight Booking</h1>
+          <p>Search and book flights to your favorite destinations</p>
+        </div>
+
+        {/* <div className="search-container">
+        <h2>Search Flights</h2>
+
+        <div className="trip-type">
+          <label>
+            <input
+              type="radio"
+              name="tripType"
+              value="roundtrip"
+              defaultChecked
+            />
+            Round Trip
+          </label>
+          <label>
+            <input type="radio" name="tripType" value="oneway" />
+            One Way
+          </label>
+        </div>
+
+        <div className="search-form">
+          <div className="form-row">
+            <div className="form-group">
+              <label>From</label>
+              <input
+                type="text"
+                name="from"
+                placeholder="City or Airport"
+                value={searchParams.from}
+                onChange={handleInputChange}
+              />
+            </div>
+
+            <div className="form-group">
+              <label>To</label>
+              <input
+                type="text"
+                name="to"
+                placeholder="City or Airport"
+                value={searchParams.to}
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
+
+          <div className="form-row">
+            <div className="form-group">
+              <label>Depart</label>
+              <input
+                type="date"
+                name="departDate"
+                value={searchParams.departDate}
+                onChange={handleInputChange}
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Return</label>
+              <input
+                type="date"
+                name="returnDate"
+                value={searchParams.returnDate}
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
+
+          <div className="form-row">
+            <div className="form-group">
+              <label>Passengers</label>
+              <select
+                name="passengers"
+                value={searchParams.passengers}
+                onChange={handleInputChange}
+              >
+                {[1, 2, 3, 4, 5, 6].map((num) => (
+                  <option key={num} value={num}>
+                    {num}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label>Class</label>
+              <select
+                name="cabinClass"
+                value={searchParams.cabinClass}
+                onChange={handleInputChange}
+              >
+                <option value="economy">Economy</option>
+                <option value="premium">Premium Economy</option>
+                <option value="business">Business</option>
+                <option value="first">First Class</option>
+              </select>
+            </div>
+          </div>
+
+          <button className="search-button">Search Flights</button>
+        </div>
+      </div> */}
+
+        <div className="airlines-section">
+          <h2>Our Partner Airlines</h2>
+          <div className="airlines-container">
+            {airlines.map((airline) => (
+              <div className="airline-card" key={airline.id}>
+                <div className="airline-logo-container">
+                  <img
+                    src={airline.logo}
+                    alt={airline.name}
+                    className="airline-logo"
+                  />
+                </div>
+                <h3>{airline.name}</h3>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="booking-actions">
+          <a href="/bookings/create" className="action-link">
+            <button className="action-button primary">Book a Flight</button>
+          </a>
+          <a href="/bookingDetails" className="action-link">
+            <button className="action-button secondary">
+              View Booking Details
+            </button>
+          </a>
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
+}
