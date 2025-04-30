@@ -81,15 +81,15 @@ const EditHotel = () => {
             formIsValid = false;
         }
 
-        if (!guests.trim()) {
-            errors.guests = "Number of guests is required";
-            formIsValid = false;
-        }
+        // if (!guests.trim()) {
+        //     errors.guests = "Number of guests is required";
+        //     formIsValid = false;
+        // }
 
-        if (!guests.trim() || isNaN(guests) || parseInt(guests) <= 0) {
-            errors.guests = "Number of guests must be a valid positive number";
-            formIsValid = false;
-        }
+        // if (!guests.trim() || isNaN(guests) || parseInt(guests) <= 0) {
+        //     errors.guests = "Number of guests must be a valid positive number";
+        //     formIsValid = false;
+        // }
 
         if (!checkInDate.trim()) {
             errors.checkInDate = "Check-in Date is required";
@@ -123,7 +123,7 @@ const EditHotel = () => {
 
     const updateData = async (e) => {
         e.preventDefault();
-        if (!validateForm()) return;
+        // if (!validateForm()) return;
 
         const confirmed = window.confirm("Are you sure you want to update this hotel booking?");
         if (!confirmed) return;
@@ -145,7 +145,7 @@ const EditHotel = () => {
             .put(`http://localhost:8000/hotels/update/${id}`, updatedHotelData)
             .then(() => {
                 alert("Updated Successfully!");
-                navigate("/hotelDetails");
+                navigate("/viewHotel");
             })
             .catch(() => console.log("Update failed!"));
     };
