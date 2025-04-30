@@ -2,5 +2,5 @@ projectKey=Air_Travel_Tours
 serverUrl=http://localhost:9000
 serverVersion=25.4.0.105899
 dashboardUrl=http://localhost:9000/dashboard?id=Air_Travel_Tours
-ceTaskId=a0c9eddd-eb68-4ca4-a960-410bb1bb0195
-ceTaskUrl=http://localhost:9000/api/ce/task?id=a0c9eddd-eb68-4ca4-a960-410bb1bb0195
+ceTaskId=d3a2c90d-bd28-4328-982b-bfafdb5ea760
+ceTaskUrl=http://localhost:9000/api/ce/task?id=d3a2c90d-bd28-4328-982b-bfafdb5ea760
