@@ -66,6 +66,14 @@ export default function HotelBookingDashboard() {
 
                 <h1 className="title">Find Your Perfect Stay</h1>
 
+                {/* View Details Button */}
+                <button
+                    className="view-details-button"
+                    onClick={() => navigate(`/viewHotel`)}
+                >
+                    View Details
+                </button>
+
                 <div className="search-filter">
                     <input
                         type="text"

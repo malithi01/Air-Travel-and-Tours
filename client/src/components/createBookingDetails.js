@@ -10,13 +10,103 @@ const CreateBookings = () => {
   const [passportNumber, setPassportNumber] = useState("");
   const [airlineName, setAirlineName] = useState("");
   const [flightClass, setFlightClass] = useState("");
-  const [noOfPassengers, setNoOfPassengers] = useState("");
+  const [noOfPassengers, setNoOfPassengers] = useState("1");
   const [seatType, setSeatType] = useState("");
   const [ticketPrice, setTicketPrice] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
   const [formErrors, setFormErrors] = useState({});
+  
+  // Define price mapping for each airline and class
+  const airlinePricing = {
+    "Emirates": {
+      "Economy": 750,
+      "Premium Economy": 1200,
+      "Business": 2500,
+      "First Class": 4000
+    },
+    "Qatar Airways": {
+      "Economy": 800,
+      "Premium Economy": 1300,
+      "Business": 2600,
+      "First Class": 4200
+    },
+    "Sri Lankan": {
+      "Economy": 650,
+      "Premium Economy": 1100,
+      "Business": 2200,
+      "First Class": 3500
+    }
+  };
 
-  // Fetch the latest booing ID and generate the next one
+  // Options for dropdown menus
+  const airlineOptions = [
+    "Emirates",
+    "Qatar Airways",
+    "Sri Lankan"
+  ];
+
+  const flightClassOptions = [
+    "Economy",
+    "Premium Economy",
+    "Business",
+    "First Class"
+  ];
+
+  const seatTypeOptions = [
+    "Window",
+    "Middle",
+    "Aisle",
+    "Bulkhead",
+    "Exit Row"
+  ];
+
+  const paymentMethodOptions = [
+    "Credit Card",
+    "Debit Card",
+    "PayPal",
+    "Bank Transfer",
+    "Apple Pay",
+    "Google Pay"
+  ];
+
+  // Parse URL parameters on component mount
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const airlineParam = queryParams.get("airline");
+    
+    if (airlineParam && airlineOptions.includes(airlineParam)) {
+      setAirlineName(airlineParam);
+      
+      // If airline is pre-selected, set a default class to calculate initial price
+      const defaultClass = "Economy";
+      setFlightClass(defaultClass);
+      
+      // Calculate initial price based on selected airline and default class
+      if (airlinePricing[airlineParam] && airlinePricing[airlineParam][defaultClass]) {
+        setTicketPrice(airlinePricing[airlineParam][defaultClass]);
+      }
+    }
+    
+    fetchLatestBookingId();
+  }, []);
+
+  // Calculate ticket price whenever airline, flight class, or number of passengers changes
+  useEffect(() => {
+    calculateTicketPrice();
+  }, [airlineName, flightClass, noOfPassengers]);
+
+  // Calculate ticket price based on selected airline and class
+  const calculateTicketPrice = () => {
+    if (airlineName && flightClass && noOfPassengers) {
+      if (airlinePricing[airlineName] && airlinePricing[airlineName][flightClass]) {
+        const basePrice = airlinePricing[airlineName][flightClass];
+        const totalPrice = basePrice * parseInt(noOfPassengers, 10);
+        setTicketPrice(totalPrice.toString());
+      }
+    }
+  };
+
+  // Fetch the latest booking ID and generate the next one
   const fetchLatestBookingId = async () => {
     try {
       const response = await axios.get("http://localhost:8000/booking/latest");
@@ -36,10 +126,6 @@ const CreateBookings = () => {
       setBookingId("R001"); // fallback
     }
   };
-
-  useEffect(() => {
-    fetchLatestBookingId();
-  }, []);
 
   // Validating form details
   const validateForm = () => {
@@ -66,8 +152,21 @@ const CreateBookings = () => {
       formIsValid = false;
     }
 
+    if (!contactNumber.trim() || !/^\d{10}$/.test(contactNumber)) {
+      errors.contactNumber = "Contact number must be 10 digits";
+      formIsValid = false;
+    }
+
     if (!emailAddress.trim()) {
       errors.emailAddress = "Email address is required";
+      formIsValid = false;
+    }
+
+    if (
+      !emailAddress.trim() ||
+      !/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(emailAddress)
+    ) {
+      errors.emailAddress = "Invalid email address";
       formIsValid = false;
     }
 
@@ -76,33 +175,33 @@ const CreateBookings = () => {
       formIsValid = false;
     }
 
-    if (!airlineName.trim()) {
+    if (!airlineName) {
       errors.airlineName = "Airline name is required";
       formIsValid = false;
     }
 
-    if (!flightClass.trim()) {
+    if (!flightClass) {
       errors.flightClass = "Flight class is required";
       formIsValid = false;
     }
 
     if (!noOfPassengers.trim()) {
-      errors.noOfPassengers = "No Of Passengers is required";
+      errors.noOfPassengers = "Number of passengers is required";
       formIsValid = false;
     }
 
-    if (!seatType.trim()) {
+    if (!seatType) {
       errors.seatType = "Seat Type is required";
       formIsValid = false;
     }
 
-    if (!ticketPrice.trim()) {
+    if (!ticketPrice) {
       errors.ticketPrice = "Ticket Price is required";
       formIsValid = false;
     }
 
-    if (!paymentMethod.trim()) {
-      errors.paymentMethod = "payment Method is required";
+    if (!paymentMethod) {
+      errors.paymentMethod = "Payment Method is required";
       formIsValid = false;
     }
 
@@ -118,7 +217,7 @@ const CreateBookings = () => {
     }
 
     try {
-      const newBooikngData = {
+      const newBookingData = {
         bookingid,
         fullName,
         age,
@@ -133,9 +232,28 @@ const CreateBookings = () => {
         paymentMethod,
       };
 
-      await axios.post("http://localhost:8000/booking/save", newBooikngData);
+      await axios.post("http://localhost:8000/booking/save", newBookingData);
 
       alert("Details saved successfully");
+      
+      // Reset form state
+      setBookingId("");
+      setFullName("");
+      setAge("");
+      setContactNumber("");
+      setEmailAddress("");
+      setPassportNumber("");
+      setAirlineName("");
+      setFlightClass("");
+      setNoOfPassengers("1");
+      setSeatType("");
+      setTicketPrice("");
+      setPaymentMethod("");
+      setFormErrors({});
+      
+      // Generate new booking ID
+      fetchLatestBookingId();
+      
     } catch (error) {
       console.error(
         "Error occurred while processing axios post request:",
@@ -147,27 +265,12 @@ const CreateBookings = () => {
         alert("Failed to save record");
       }
     }
-
-    // Reset form state
-    setBookingId("");
-    setFullName("");
-    setAge("");
-    setContactNumber("");
-    setEmailAddress("");
-    setPassportNumber("");
-    setAirlineName("");
-    setFlightClass("");
-    setNoOfPassengers("");
-    setSeatType("");
-    setTicketPrice("");
-    setPaymentMethod("");
-    setFormErrors("");
   };
 
   return (
     <div className="container">
       <button className="btn-back">
-        <a href="/bookingDetails" className="back-link">
+        <a href="/flightDashboard" className="back-link">
           Back
         </a>
       </button>
@@ -179,8 +282,8 @@ const CreateBookings = () => {
             <input
               type="text"
               className={`input ${formErrors.bookingid && "input-error"}`}
-              onChange={(e) => setBookingId(e.target.value)}
               value={bookingid}
+              readOnly
             />
             {formErrors.bookingid && (
               <span className="error-text">{formErrors.bookingid}</span>
@@ -203,10 +306,11 @@ const CreateBookings = () => {
           <div className="form-group">
             <label>Age</label>
             <input
-              type="text"
+              type="number"
               className={`input ${formErrors.age && "input-error"}`}
               onChange={(e) => setAge(e.target.value)}
               value={age}
+              min="0"
             />
             {formErrors.age && (
               <span className="error-text">{formErrors.age}</span>
@@ -216,10 +320,11 @@ const CreateBookings = () => {
           <div className="form-group">
             <label>Contact Number</label>
             <input
-              type="text"
+              type="tel"
               className={`input ${formErrors.contactNumber && "input-error"}`}
               onChange={(e) => setContactNumber(e.target.value)}
               value={contactNumber}
+              maxLength="10"
             />
             {formErrors.contactNumber && (
               <span className="error-text">{formErrors.contactNumber}</span>
@@ -229,7 +334,7 @@ const CreateBookings = () => {
           <div className="form-group">
             <label>Email Address</label>
             <input
-              type="text"
+              type="email"
               className={`input ${formErrors.emailAddress && "input-error"}`}
               onChange={(e) => setEmailAddress(e.target.value)}
               value={emailAddress}
@@ -254,12 +359,18 @@ const CreateBookings = () => {
 
           <div className="form-group">
             <label>Airline Name</label>
-            <input
-              type="text"
+            <select
               className={`input ${formErrors.airlineName && "input-error"}`}
               onChange={(e) => setAirlineName(e.target.value)}
               value={airlineName}
-            />
+            >
+              <option value="">Select Airline</option>
+              {airlineOptions.map((airline, index) => (
+                <option key={index} value={airline}>
+                  {airline}
+                </option>
+              ))}
+            </select>
             {formErrors.airlineName && (
               <span className="error-text">{formErrors.airlineName}</span>
             )}
@@ -267,12 +378,18 @@ const CreateBookings = () => {
 
           <div className="form-group">
             <label>Flight Class</label>
-            <input
-              type="text"
+            <select
               className={`input ${formErrors.flightClass && "input-error"}`}
               onChange={(e) => setFlightClass(e.target.value)}
               value={flightClass}
-            />
+            >
+              <option value="">Select Flight Class</option>
+              {flightClassOptions.map((flightClass, index) => (
+                <option key={index} value={flightClass}>
+                  {flightClass}
+                </option>
+              ))}
+            </select>
             {formErrors.flightClass && (
               <span className="error-text">{formErrors.flightClass}</span>
             )}
@@ -281,10 +398,11 @@ const CreateBookings = () => {
           <div className="form-group">
             <label>Number Of Passengers</label>
             <input
-              type="text"
+              type="number"
               className={`input ${formErrors.noOfPassengers && "input-error"}`}
               onChange={(e) => setNoOfPassengers(e.target.value)}
               value={noOfPassengers}
+              min="1"
             />
             {formErrors.noOfPassengers && (
               <span className="error-text">{formErrors.noOfPassengers}</span>
@@ -293,24 +411,30 @@ const CreateBookings = () => {
 
           <div className="form-group">
             <label>Seat Type</label>
-            <input
-              type="text"
+            <select
               className={`input ${formErrors.seatType && "input-error"}`}
               onChange={(e) => setSeatType(e.target.value)}
               value={seatType}
-            />
+            >
+              <option value="">Select Seat Type</option>
+              {seatTypeOptions.map((seatType, index) => (
+                <option key={index} value={seatType}>
+                  {seatType}
+                </option>
+              ))}
+            </select>
             {formErrors.seatType && (
               <span className="error-text">{formErrors.seatType}</span>
             )}
           </div>
 
           <div className="form-group">
-            <label>Ticket Price</label>
+            <label>Ticket Price ($)</label>
             <input
               type="text"
               className={`input ${formErrors.ticketPrice && "input-error"}`}
-              onChange={(e) => setTicketPrice(e.target.value)}
               value={ticketPrice}
+              readOnly
             />
             {formErrors.ticketPrice && (
               <span className="error-text">{formErrors.ticketPrice}</span>
@@ -319,12 +443,18 @@ const CreateBookings = () => {
 
           <div className="form-group">
             <label>Payment Method</label>
-            <input
-              type="text"
+            <select
               className={`input ${formErrors.paymentMethod && "input-error"}`}
               onChange={(e) => setPaymentMethod(e.target.value)}
               value={paymentMethod}
-            />
+            >
+              <option value="">Select Payment Method</option>
+              {paymentMethodOptions.map((paymentMethod, index) => (
+                <option key={index} value={paymentMethod}>
+                  {paymentMethod}
+                </option>
+              ))}
+            </select>
             {formErrors.paymentMethod && (
               <span className="error-text">{formErrors.paymentMethod}</span>
             )}
