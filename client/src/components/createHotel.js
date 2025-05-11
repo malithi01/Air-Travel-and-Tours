@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 // Update the import path to match your project structure
 import "../stylesheets/createHotel.css";
@@ -16,7 +16,32 @@ const CreateHotelDetails = () => {
     const [checkOutDate, setCheckOutDate] = useState("");
     const [formErrors, setFormErrors] = useState({});
 
-    // Validation function stays the same
+    //fetch the latest orderID and generate the next one
+    const fetchLatestHotelBookingId = async () => {
+        try {
+            const responce = await axios.get("http://localhost:8000/hotel/latest");
+            const latestBookingId = responce.data.latestBookingId;
+
+            if(latestBookingId){
+                //extract numeric part and increment
+                const numericPart =parseInt(latestBookingId.slide(1),10)+1;
+                const newBookingId = `H${numericPart.toString().padStart(3, "0")}`;
+                setHotelBookingID(newBookingId);
+            }else{
+                //if mobookings exist, start with H001
+                setHotelBookingID("H001");
+            }
+        }catch (error){
+            console.error("Error fetching latest hotel booking ID:", error);
+            setHotelBookingID("H001"); //fallback
+        }
+    };
+
+    useEffect(()=>{
+        fetchLatestHotelBookingId();
+    }, []);
+
+    // Validating the form details
     const validateForm = () => {
         const errors = {};
         let formIsValid = true;
