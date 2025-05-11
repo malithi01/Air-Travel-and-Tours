@@ -1,0 +1,268 @@
+.report-container {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    background-color: #f5f7fa;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .page-title {
+    color: #2c3e50;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    text-align: center;
+    position: relative;
+    padding-bottom: 15px;
+  }
+  
+  .page-title:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(to right, #3498db, #2ecc71);
+    border-radius: 2px;
+  }
+  
+  /* Filters section */
+  .report-filters {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    margin-bottom: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: flex-end;
+  }
+  
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 200px;
+  }
+  
+  .filter-group label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #34495e;
+    margin-bottom: 8px;
+  }
+  
+  .filter-group select,
+  .filter-group input {
+    padding: 10px 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 15px;
+    color: #2c3e50;
+    background-color: #f8fafc;
+    transition: all 0.2s ease;
+  }
+  
+  .filter-group select:focus,
+  .filter-group input:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+  }
+  
+  .date-range-container {
+    display: flex;
+    gap: 15px;
+    flex: 2;
+  }
+  
+  .generate-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-left: auto;
+  }
+  
+  .generate-btn:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.12);
+  }
+  
+  /* Summary section */
+  .report-summary {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    margin-bottom: 25px;
+  }
+  
+  .report-summary h2 {
+    font-size: 20px;
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f0f2f5;
+  }
+  
+  .summary-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+  }
+  
+  .stat-box {
+    background-color: #f8fafc;
+    border-radius: 10px;
+    padding: 20px;
+    flex: 1;
+    min-width: 150px;
+    border-top: 4px solid #3498db;
+    transition: all 0.2s ease;
+  }
+  
+  .stat-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .stat-box.revenue {
+    border-top-color: #2ecc71;
+  }
+  
+  .stat-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 5px;
+  }
+  
+  .stat-label {
+    font-size: 14px;
+    color: #7f8c8d;
+  }
+  
+  /* Table section */
+  .report-table-container {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    overflow-x: auto;
+  }
+  
+  .report-table-container h2 {
+    font-size: 20px;
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f0f2f5;
+  }
+  
+  .report-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  
+  .report-table th {
+    background-color: #f8fafc;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    color: #2c3e50;
+    border-bottom: 2px solid #e2e8f0;
+  }
+  
+  .report-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #f0f2f5;
+    color: #4a5568;
+  }
+  
+  .report-table tr:hover td {
+    background-color: #f8fafc;
+  }
+  
+  .report-table .no-data {
+    text-align: center;
+    padding: 30px 0;
+    color: #7f8c8d;
+    font-style: italic;
+  }
+  
+  .vehicle-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  
+  .vehicle-badge.car {
+    background-color: #e8f4ff;
+    color: #3498db;
+  }
+  
+  .vehicle-badge.van {
+    background-color: #e8f8f5;
+    color: #2ecc71;
+  }
+  
+  .vehicle-badge.bike {
+    background-color: #ffeee8;
+    color: #e74c3c;
+  }
+  
+  .amount {
+    font-weight: 600;
+    color: #16a085;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .report-container {
+      padding: 20px 15px;
+    }
+    
+    .report-filters {
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .date-range-container {
+      flex-direction: column;
+      width: 100%;
+    }
+    
+    .generate-btn {
+      width: 100%;
+      margin-top: 10px;
+    }
+    
+    .summary-stats {
+      flex-direction: column;
+    }
+    
+    .stat-box {
+      width: 100%;
+    }
+  }

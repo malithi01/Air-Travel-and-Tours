@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../stylesheets/createRent.css";
 
@@ -14,6 +15,8 @@ const CreateRents = () => {
   const [dropOffLocation, setDropOffLocation] = useState("");
   const [dropOffDate, setDropOffDate] = useState("");
   const [formErrors, setFormErrors] = useState({});
+
+  const navigate = useNavigate();
 
   // Fetch the latest order ID and generate the next one
   const fetchLatestOrderId = async () => {
@@ -138,6 +141,7 @@ const CreateRents = () => {
       await axios.post("http://localhost:8000/rent/save", newRentData);
 
       alert("Details saved successfully");
+      navigate("/rentDetails");
     } catch (error) {
       console.error(
         "Error occurred while processing axios post request:",
@@ -212,7 +216,7 @@ const CreateRents = () => {
             )}
           </div>
 
-          <div className="form-group">
+          {/* <div className="form-group">
             <label>Country</label>
             <input
               type="text"
@@ -220,6 +224,22 @@ const CreateRents = () => {
               onChange={(e) => setCountry(e.target.value)}
               value={country}
             />
+            {formErrors.country && (
+              <span className="error-text">{formErrors.country}</span>
+            )}
+          </div> */}
+          <div className="form-group">
+            <label>Country</label>
+            <select
+              className={`input ${formErrors.country && "input-error"}`}
+              onChange={(e) => setCountry(e.target.value)}
+              value={country}
+            >
+              <option value="">Select a Country</option>
+              <option value="SriLanka">Sri Lanka</option>
+              <option value="Bali">Bali</option>
+              <option value="Thailand">Thailand</option>
+            </select>
             {formErrors.country && (
               <span className="error-text">{formErrors.country}</span>
             )}
