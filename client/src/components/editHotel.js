@@ -19,6 +19,13 @@ const EditHotel = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
+    const today = new Date().toISOString().split("T")[0];
+
+    const minCheckOutDate = checkInDate
+        ? new Date(new Date(checkInDate).getTime() + 86400000).toISOString().split("T")[0]
+        : today;
+
+
     useEffect(() => {
         axios
             .get(`http://localhost:8000/hotels/${id}`)
@@ -27,7 +34,7 @@ const EditHotel = () => {
                 setHotelBookingID(data.hotelBookingID);
                 setFullName(data.fullName);
                 setEmail(data.email);
-                setPhoneNumber(data.email);
+                setPhoneNumber(data.phoneNumber);
                 setAddress(data.address);
                 setHotel(data.hotel);
                 setRoomType(data.roomType);
@@ -61,8 +68,11 @@ const EditHotel = () => {
             formIsValid = false;
         }
 
-        if (!phoneNumber.trim() || !/^\d{10}$/.test(phoneNumber)) {
-            errors.phoneNumber = "Phone number must be 10 digits";
+        if (!phoneNumber.trim()) {
+            errors.phoneNumber = "Contact Number is required";
+            formIsValid = false;
+        } else if (!/^\d{10,12}$/.test(phoneNumber)) {
+            errors.telphoneNumber = "Invalid Contact number. Must be 10-12 digits long.";
             formIsValid = false;
         }
 
@@ -81,15 +91,24 @@ const EditHotel = () => {
             formIsValid = false;
         }
 
-        // if (!guests.trim()) {
-        //     errors.guests = "Number of guests is required";
-        //     formIsValid = false;
-        // }
+        const maxGuestsPerRoomType = {
+            single: 2,
+            family: 4,
+            group: 10
+        };
 
-        // if (!guests.trim() || isNaN(guests) || parseInt(guests) <= 0) {
-        //     errors.guests = "Number of guests must be a valid positive number";
-        //     formIsValid = false;
-        // }
+        if (!guests.trim() || isNaN(guests) || parseInt(guests) <= 0) {
+            errors.guests = "Number of guests must be a valid positive number";
+            formIsValid = false;
+        } else {
+            const guestCount = parseInt(guests);
+            const maxGuestsAllowed = maxGuestsPerRoomType[roomType]; // assume roomType holds selected room value
+
+            if (maxGuestsAllowed && guestCount > maxGuestsAllowed) {
+                errors.guests = `Maximum ${maxGuestsAllowed} guests allowed for a ${roomType} room`;
+                formIsValid = false;
+            }
+        }
 
         if (!checkInDate.trim()) {
             errors.checkInDate = "Check-in Date is required";
@@ -149,12 +168,6 @@ const EditHotel = () => {
             })
             .catch(() => console.log("Update failed!"));
     };
-
-    // const getOneDayLaterDate = () => {
-    //     const today = new Date();
-    //     today.setDate(today.getDate() + 2);
-    //     return today.toISOString().slice(0, 16);
-    // };
 
     return (
         <div className="edit-container">
@@ -256,34 +269,28 @@ const EditHotel = () => {
                         {formErrors.guests && <p className="edit-error-message">{formErrors.guests}</p>}
                     </div>
 
-                    {/* <div className="edit-form-group">
-                        <label>Check-in Date</label>
-                        <input type="datetime-local" value={checkInDate} onChange={(e) => setCheckInDate(e.target.value)} />
-                        {formErrors.checkInDate && <p className="edit-error-message">{formErrors.checkInDate}</p>}
-                    </div>
-
-                    <div className="edit-form-group">
-                        <label>Check-out Date</label>
-                        <input type="datetime-local" value={checkOutDate} onChange={(e) => setCheckOutDate(e.target.value)} />
-                        {formErrors.checkOutDate && <p className="edit-error-message">{formErrors.checkOutDate}</p>}
-                    </div> */}
-
                     <div className="editform-group">
                         <label>Check In Date</label>
                         <input
                             type="date"  // Change type to "date" to only select the date
                             value={checkInDate ? new Date(checkInDate).toISOString().slice(0, 10) : new Date().toISOString().slice(0, 10)}
                             onChange={(e) => setCheckInDate(e.target.value)}
+                            min={today}
+                            className={formErrors.checkInDate ? "error" : ""}
                         />
+                        {formErrors.checkInDate && <p className="editerror-message">{formErrors.checkInDate}</p>}
                     </div>
 
                     <div className="editform-group">
                         <label>Check out Date</label>
                         <input
-                            type="date"  // Change type to "date" to only select the date
+                            type="date"
                             value={checkInDate ? new Date(checkOutDate).toISOString().slice(0, 10) : new Date().toISOString().slice(0, 10)}
                             onChange={(e) => setCheckOutDate(e.target.value)}
+                            min={minCheckOutDate}
+                            className={formErrors.checkOutDate ? "error" : ""}
                         />
+                         {formErrors.checkOutDate && <p className="editerror-message">{formErrors.checkOutDate}</p>}
                     </div>
 
 

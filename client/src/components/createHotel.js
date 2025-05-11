@@ -16,28 +16,33 @@ const CreateHotelDetails = () => {
     const [checkOutDate, setCheckOutDate] = useState("");
     const [formErrors, setFormErrors] = useState({});
 
+    const today = new Date().toISOString().split("T")[0];
+    const minCheckOutDate = checkInDate
+        ? new Date(new Date(checkInDate).getTime() + 86400000).toISOString().split("T")[0]
+        : today;
+
     //fetch the latest orderID and generate the next one
     const fetchLatestHotelBookingId = async () => {
         try {
             const responce = await axios.get("http://localhost:8000/hotel/latest");
             const latestBookingId = responce.data.latestBookingId;
 
-            if(latestBookingId){
+            if (latestBookingId) {
                 //extract numeric part and increment
-                const numericPart =parseInt(latestBookingId.slide(1),10)+1;
+                const numericPart = parseInt(latestBookingId.slide(1), 10) + 1;
                 const newBookingId = `H${numericPart.toString().padStart(3, "0")}`;
                 setHotelBookingID(newBookingId);
-            }else{
+            } else {
                 //if mobookings exist, start with H001
                 setHotelBookingID("H001");
             }
-        }catch (error){
+        } catch (error) {
             console.error("Error fetching latest hotel booking ID:", error);
             setHotelBookingID("H001"); //fallback
         }
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         fetchLatestHotelBookingId();
     }, []);
 
@@ -81,9 +86,23 @@ const CreateHotelDetails = () => {
             formIsValid = false;
         }
 
+        const maxGuestsPerRoomType = {
+            single: 2,
+            family: 4,
+            group: 10
+        };
+
         if (!guests.trim() || isNaN(guests) || parseInt(guests) <= 0) {
             errors.guests = "Number of guests must be a valid positive number";
             formIsValid = false;
+        } else {
+            const guestCount = parseInt(guests);
+            const maxGuestsAllowed = maxGuestsPerRoomType[roomType]; // assume roomType holds selected room value
+
+            if (maxGuestsAllowed && guestCount > maxGuestsAllowed) {
+                errors.guests = `Maximum ${maxGuestsAllowed} guests allowed for a ${roomType} room`;
+                formIsValid = false;
+            }
         }
 
         if (!checkInDate.trim()) {
@@ -164,100 +183,100 @@ const CreateHotelDetails = () => {
                 <a href="/hotelDashBoard" className="hotel-booking-back-btn">
                     <span className="hotel-booking-back-link">Back</span>
                 </a>
-                
+
                 <h1 className="hotel-booking-title">Hotel Booking</h1>
-                
-                <form onSubmit={sendData}className="hotelForm">
+
+                <form onSubmit={sendData} className="hotelForm">
                     <div className="hotel-booking-form-group">
                         <label className="hotel-booking-label">Hotel Booking ID</label>
-                        <input 
-                            type="text" 
-                            className="hotel-booking-input-12" 
-                            value={hotelBookingID} 
-                            onChange={(e) => setHotelBookingID(e.target.value)} 
+                        <input
+                            type="text"
+                            className="hotel-booking-input-12"
+                            value={hotelBookingID}
+                            onChange={(e) => setHotelBookingID(e.target.value)}
                             placeholder="Enter booking ID"
                         />
-                        {formErrors.hotelBookingID && 
+                        {formErrors.hotelBookingID &&
                             <span className="hotel-booking-error">{formErrors.hotelBookingID}</span>
                         }
                     </div>
-                    
+
 
                     <div className="hotel-booking-form-group">
                         <label className="hotel-booking-label">Full Name</label>
-                        <input 
-                            type="text" 
-                            className="hotel-booking-input-12" 
-                            value={fullName} 
-                            onChange={(e) => setFullName(e.target.value)} 
+                        <input
+                            type="text"
+                            className="hotel-booking-input-12"
+                            value={fullName}
+                            onChange={(e) => setFullName(e.target.value)}
                             placeholder="Enter your full name"
                         />
-                        {formErrors.fullName && 
+                        {formErrors.fullName &&
                             <span className="hotel-booking-error">{formErrors.fullName}</span>
                         }
                     </div>
 
                     <div className="hotel-booking-form-group">
                         <label className="hotel-booking-label">Email</label>
-                        <input 
-                            type="email" 
-                            className="hotel-booking-input-12" 
-                            value={email} 
-                            onChange={(e) => setEmail(e.target.value)} 
+                        <input
+                            type="email"
+                            className="hotel-booking-input-12"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             placeholder="Enter your email address"
                         />
-                        {formErrors.email && 
+                        {formErrors.email &&
                             <span className="hotel-booking-error">{formErrors.email}</span>
                         }
                     </div>
 
                     <div className="hotel-booking-form-group">
                         <label className="hotel-booking-label">Phone Number</label>
-                        <input 
-                            type="tel" 
-                            className="hotel-booking-input-12" 
-                            value={phoneNumber} 
-                            onChange={(e) => setPhoneNumber(e.target.value)} 
+                        <input
+                            type="tel"
+                            className="hotel-booking-input-12"
+                            value={phoneNumber}
+                            onChange={(e) => setPhoneNumber(e.target.value)}
                             placeholder="Enter your 10-digit phone number"
                         />
-                        {formErrors.phoneNumber && 
+                        {formErrors.phoneNumber &&
                             <span className="hotel-booking-error">{formErrors.phoneNumber}</span>
                         }
                     </div>
 
                     <div className="hotel-booking-form-group">
                         <label className="hotel-booking-label">Address</label>
-                        <input 
-                            type="text" 
-                            className="hotel-booking-input-12" 
-                            value={address} 
-                            onChange={(e) => setAddress(e.target.value)} 
+                        <input
+                            type="text"
+                            className="hotel-booking-input-12"
+                            value={address}
+                            onChange={(e) => setAddress(e.target.value)}
                             placeholder="Enter your address"
                         />
-                        {formErrors.address && 
+                        {formErrors.address &&
                             <span className="hotel-booking-error">{formErrors.address}</span>
                         }
                     </div>
 
                     <div className="hotel-booking-form-group">
                         <label className="hotel-booking-label">Hotel</label>
-                        <input 
-                            type="text" 
-                            className="hotel-booking-input-12" 
-                            value={hotel} 
-                            onChange={(e) => setHotel(e.target.value)} 
+                        <input
+                            type="text"
+                            className="hotel-booking-input-12"
+                            value={hotel}
+                            onChange={(e) => setHotel(e.target.value)}
                             placeholder="Enter hotel name"
                         />
-                        {formErrors.hotel && 
+                        {formErrors.hotel &&
                             <span className="hotel-booking-error">{formErrors.hotel}</span>
                         }
                     </div>
 
                     <div className="hotel-booking-form-group">
                         <label className="hotel-booking-label">Room Type</label>
-                        <select 
-                            className="hotel-booking-select" 
-                            value={roomType} 
+                        <select
+                            className="hotel-booking-select"
+                            value={roomType}
                             onChange={(e) => setRoomType(e.target.value)}
                         >
                             <option value="">Select a Room type</option>
@@ -265,47 +284,49 @@ const CreateHotelDetails = () => {
                             <option value="family">Family</option>
                             <option value="group">Group</option>
                         </select>
-                        {formErrors.roomType && 
+                        {formErrors.roomType &&
                             <span className="hotel-booking-error">{formErrors.roomType}</span>
                         }
                     </div>
 
                     <div className="hotel-booking-form-group">
                         <label className="hotel-booking-label">Guests</label>
-                        <input 
-                            type="number" 
-                            className="hotel-booking-input-12" 
-                            value={guests} 
-                            onChange={(e) => setGuests(e.target.value)} 
+                        <input
+                            type="number"
+                            className="hotel-booking-input-12"
+                            value={guests}
+                            onChange={(e) => setGuests(e.target.value)}
                             placeholder="Enter number of guests"
                         />
-                        {formErrors.guests && 
+                        {formErrors.guests &&
                             <span className="hotel-booking-error">{formErrors.guests}</span>
                         }
                     </div>
 
                     <div className="hotel-booking-form-group">
                         <label className="hotel-booking-label">Check-in Date</label>
-                        <input 
-                            type="date" 
-                            className="hotel-booking-input-12" 
-                            value={checkInDate} 
-                            onChange={(e) => setCheckInDate(e.target.value)} 
+                        <input
+                            type="date"
+                            className="hotel-booking-input-12"
+                            value={checkInDate}
+                            onChange={(e) => setCheckInDate(e.target.value)}
+                            min={today}
                         />
-                        {formErrors.checkInDate && 
+                        {formErrors.checkInDate &&
                             <span className="hotel-booking-error">{formErrors.checkInDate}</span>
                         }
                     </div>
 
                     <div className="hotel-booking-form-group">
                         <label className="hotel-booking-label">Check-out Date</label>
-                        <input 
-                            type="date" 
-                            className="hotel-booking-input-12" 
-                            value={checkOutDate} 
-                            onChange={(e) => setCheckOutDate(e.target.value)} 
+                        <input
+                            type="date"
+                            className="hotel-booking-input-12"
+                            value={checkOutDate}
+                            onChange={(e) => setCheckOutDate(e.target.value)}
+                            min={minCheckOutDate}
                         />
-                        {formErrors.checkOutDate && 
+                        {formErrors.checkOutDate &&
                             <span className="hotel-booking-error">{formErrors.checkOutDate}</span>
                         }
                     </div>
