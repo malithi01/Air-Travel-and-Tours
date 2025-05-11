@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import jsPDF from "jspdf";
-import "jspdf-autotable";
-import "./bookingReport.css";
+// import jsPDF from 'jspdf';
+import autoTable from "jspdf-autotable";
+
+import "../stylesheets/bookingReport.css";
 
 const RentReportGenerate = () => {
   const [rentDetails, setRentDetails] = useState([]);
@@ -116,37 +118,51 @@ const RentReportGenerate = () => {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
     const now = new Date();
-    
+
     // Add report title
     doc.setFontSize(18);
     doc.setTextColor(44, 62, 80);
     doc.text("Vehicle Booking Report", pageWidth / 2, 20, { align: "center" });
-    
+
     // Add report generation info
     doc.setFontSize(10);
     doc.setTextColor(127, 140, 141);
     doc.text(
-      `Generated on: ${now.toLocaleDateString()} ${now.toLocaleTimeString()}`, 
-      pageWidth / 2, 
-      28, 
+      `Generated on: ${now.toLocaleDateString()} ${now.toLocaleTimeString()}`,
+      pageWidth / 2,
+      28,
       { align: "center" }
     );
 
     // Add filter information
     doc.setFontSize(12);
     doc.setTextColor(44, 62, 80);
-    
+
     let yPosition = 40;
-    
-    doc.text(`Report Type: ${reportType === "all" ? "All Bookings" : "Date Range"}`, 14, yPosition);
+
+    doc.text(
+      `Report Type: ${reportType === "all" ? "All Bookings" : "Date Range"}`,
+      14,
+      yPosition
+    );
     yPosition += 7;
-    
+
     if (reportType === "date-range") {
-      doc.text(`Date Range: ${dateRange.start} to ${dateRange.end}`, 14, yPosition);
+      doc.text(
+        `Date Range: ${dateRange.start} to ${dateRange.end}`,
+        14,
+        yPosition
+      );
       yPosition += 7;
     }
-    
-    doc.text(`Vehicle Type: ${vehicleType === "all" ? "All Types" : vehicleType.toUpperCase()}`, 14, yPosition);
+
+    doc.text(
+      `Vehicle Type: ${
+        vehicleType === "all" ? "All Types" : vehicleType.toUpperCase()
+      }`,
+      14,
+      yPosition
+    );
     yPosition += 10;
 
     // Add summary section
@@ -160,7 +176,11 @@ const RentReportGenerate = () => {
     doc.setTextColor(44, 62, 80);
     doc.text(`Total Bookings: ${summary.totalBookings}`, 16, yPosition);
     yPosition += 7;
-    doc.text(`Total Revenue: Rs ${summary.totalRevenue.toLocaleString()}`, 16, yPosition);
+    doc.text(
+      `Total Revenue: Rs ${summary.totalRevenue.toLocaleString()}`,
+      16,
+      yPosition
+    );
     yPosition += 7;
     doc.text(`Cars: ${summary.vehicleCounts.car}`, 16, yPosition);
     yPosition += 7;
@@ -171,15 +191,15 @@ const RentReportGenerate = () => {
 
     // Add bookings table
     const tableColumn = [
-      "Order ID", 
-      "Customer", 
-      "Vehicle", 
-      "Pick-up Date", 
-      "Drop-off Date", 
-      "Amount (Rs)"
+      "Order ID",
+      "Customer",
+      "Vehicle",
+      "Pick-up Date",
+      "Drop-off Date",
+      "Amount (Rs)",
     ];
-    
-    const tableRows = filteredData.map(booking => [
+
+    const tableRows = filteredData.map((booking) => [
       booking.carOrderid,
       booking.nameOfRenter,
       booking.vehicleType,
@@ -189,25 +209,51 @@ const RentReportGenerate = () => {
         booking.vehicleType,
         booking.pickUpDate,
         booking.dropOffDate
-      ).toLocaleString()
+      ).toLocaleString(),
     ]);
 
-    doc.autoTable({
+    // doc.autoTable({
+    //   startY: yPosition,
+    //   head: [tableColumn],
+    //   body: tableRows,
+    //   theme: 'striped',
+    //   headStyles: {
+    //     fillColor: [52, 152, 219],
+    //     textColor: 255
+    //   },
+    //   alternateRowStyles: {
+    //     fillColor: [240, 240, 240]
+    //   }
+    // });
+
+    // autoTable(doc, {
+    //   head: [["Column 1", "Column 2"]],
+    //   body: [
+    //     ["Data 1", "Data 2"],
+    //     ["Data 3", "Data 4"],
+    //   ],
+    // });
+    // doc.save("report.pdf");
+
+    autoTable(doc, {
       startY: yPosition,
       head: [tableColumn],
       body: tableRows,
-      theme: 'striped',
-      headStyles: { 
+      theme: "striped",
+      headStyles: {
         fillColor: [52, 152, 219],
-        textColor: 255
+        textColor: 255,
       },
       alternateRowStyles: {
-        fillColor: [240, 240, 240]
-      }
+        fillColor: [240, 240, 240],
+      },
     });
+    doc.save("report.pdf");
 
     // Save PDF
-    doc.save(`vehicle_booking_report_${new Date().toISOString().slice(0, 10)}.pdf`);
+    doc.save(
+      `vehicle_booking_report_${new Date().toISOString().slice(0, 10)}.pdf`
+    );
   };
 
   if (isLoading) {
@@ -332,7 +378,9 @@ const RentReportGenerate = () => {
                   <td>{booking.carOrderid}</td>
                   <td>{booking.nameOfRenter}</td>
                   <td className="vehicle-type">
-                    <span className={`vehicle-badge ${booking.vehicleType.toLowerCase()}`}>
+                    <span
+                      className={`vehicle-badge ${booking.vehicleType.toLowerCase()}`}
+                    >
                       {booking.vehicleType}
                     </span>
                   </td>

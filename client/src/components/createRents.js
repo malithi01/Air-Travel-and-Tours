@@ -235,7 +235,7 @@ const CreateRents = () => {
               onChange={(e) => setCountry(e.target.value)}
               value={country}
             >
-              <option value="">Select a Vehicle type</option>
+              <option value="">Select a Country</option>
               <option value="SriLanka">Sri Lanka</option>
               <option value="Bali">Bali</option>
               <option value="Thailand">Thailand</option>
