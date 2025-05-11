@@ -11,21 +11,40 @@ export default function FlightBookingDashboard() {
     setSearchParams((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Updated airlines with pricing information
   const airlines = [
     {
       id: 1,
       name: "Emirates",
       logo: "./images/Emirates_logo.svg.png",
+      price: {
+        Economy: 750,
+        "Premium Economy": 1200,
+        Business: 2500,
+        "First Class": 4000
+      }
     },
     {
       id: 2,
-      name: "Quater",
+      name: "Qatar Airways",
       logo: "./images/images.png",
+      price: {
+        Economy: 800,
+        "Premium Economy": 1300,
+        Business: 2600,
+        "First Class": 4200
+      }
     },
     {
       id: 3,
       name: "Sri Lankan",
       logo: "./images/sri-lankan-airlines-logo-png_seeklogo-131159.png",
+      price: {
+        Economy: 650,
+        "Premium Economy": 1100,
+        Business: 2200,
+        "First Class": 3500
+      }
     },
   ];
 
@@ -38,106 +57,7 @@ export default function FlightBookingDashboard() {
           <p>Search and book flights to your favorite destinations</p>
         </div>
 
-        {/* <div className="search-container">
-        <h2>Search Flights</h2>
-
-        <div className="trip-type">
-          <label>
-            <input
-              type="radio"
-              name="tripType"
-              value="roundtrip"
-              defaultChecked
-            />
-            Round Trip
-          </label>
-          <label>
-            <input type="radio" name="tripType" value="oneway" />
-            One Way
-          </label>
-        </div>
-
-        <div className="search-form">
-          <div className="form-row">
-            <div className="form-group">
-              <label>From</label>
-              <input
-                type="text"
-                name="from"
-                placeholder="City or Airport"
-                value={searchParams.from}
-                onChange={handleInputChange}
-              />
-            </div>
-
-            <div className="form-group">
-              <label>To</label>
-              <input
-                type="text"
-                name="to"
-                placeholder="City or Airport"
-                value={searchParams.to}
-                onChange={handleInputChange}
-              />
-            </div>
-          </div>
-
-          <div className="form-row">
-            <div className="form-group">
-              <label>Depart</label>
-              <input
-                type="date"
-                name="departDate"
-                value={searchParams.departDate}
-                onChange={handleInputChange}
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Return</label>
-              <input
-                type="date"
-                name="returnDate"
-                value={searchParams.returnDate}
-                onChange={handleInputChange}
-              />
-            </div>
-          </div>
-
-          <div className="form-row">
-            <div className="form-group">
-              <label>Passengers</label>
-              <select
-                name="passengers"
-                value={searchParams.passengers}
-                onChange={handleInputChange}
-              >
-                {[1, 2, 3, 4, 5, 6].map((num) => (
-                  <option key={num} value={num}>
-                    {num}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="form-group">
-              <label>Class</label>
-              <select
-                name="cabinClass"
-                value={searchParams.cabinClass}
-                onChange={handleInputChange}
-              >
-                <option value="economy">Economy</option>
-                <option value="premium">Premium Economy</option>
-                <option value="business">Business</option>
-                <option value="first">First Class</option>
-              </select>
-            </div>
-          </div>
-
-          <button className="search-button">Search Flights</button>
-        </div>
-      </div> */}
+        {/* Search container commented out */}
 
         <div className="airlines-section">
           <h2>Our Partner Airlines</h2>
@@ -152,6 +72,16 @@ export default function FlightBookingDashboard() {
                   />
                 </div>
                 <h3>{airline.name}</h3>
+                <div className="airline-pricing">
+                  <p>Economy from ${airline.price.Economy}</p>
+                  <p>Business from ${airline.price.Business}</p>
+                </div>
+                <a 
+                  href={`/bookings/create?airline=${encodeURIComponent(airline.name)}&airlineData=${encodeURIComponent(JSON.stringify(airline))}`} 
+                  className="book-now-btn"
+                >
+                  Book Now
+                </a>
               </div>
             ))}
           </div>

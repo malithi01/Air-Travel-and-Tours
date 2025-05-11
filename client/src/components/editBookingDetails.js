@@ -20,9 +20,18 @@ const EditBookings = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
+  const airlineOptions = [
+    "Emirates", "Qatar Airways", "Singapore Airlines", "Air France",
+    "Lufthansa", "British Airways", "American Airlines", "Delta Air Lines",
+    "United Airlines", "Other",
+  ];
+
+  const flightClassOptions = ["Economy", "Premium Economy", "Business", "First Class"];
+  const seatTypeOptions = ["Window", "Middle", "Aisle", "Bulkhead", "Exit Row"];
+  const paymentMethodOptions = ["Credit Card", "Debit Card", "PayPal", "Bank Transfer", "Cash"];
+
   useEffect(() => {
-    axios
-      .get(`http://localhost:8000/booking/${id}`)
+    axios.get(`http://localhost:8000/booking/${id}`)
       .then((res) => {
         const data = res.data.bookingDetails;
         setBookingId(data.bookingid);
@@ -45,28 +54,24 @@ const EditBookings = () => {
     const errors = {};
     let formIsValid = true;
 
-    // if (!bookingid.trim()) {
-    //   errors.bookingid = "booking ID is required";
-    //   formIsValid = false;
-    // }
-
     if (!fullName.trim()) {
       errors.fullName = "Full name is required";
       formIsValid = false;
     }
 
-    // if (!age.trim()) {
-    //   errors.age = "Age is required";
-    //   formIsValid = false;
-    // }
-
     if (!contactNumber.trim()) {
       errors.contactNumber = "Contact Number is required";
+      formIsValid = false;
+    } else if (!/^\d{10}$/.test(contactNumber)) {
+      errors.contactNumber = "Contact Number must be exactly 10 digits";
       formIsValid = false;
     }
 
     if (!emailAddress.trim()) {
       errors.emailAddress = "Email Address is required";
+      formIsValid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailAddress)) {
+      errors.emailAddress = "Invalid Email Address format";
       formIsValid = false;
     }
 
@@ -85,18 +90,8 @@ const EditBookings = () => {
       formIsValid = false;
     }
 
-    // if (!noOfPassengers.trim()) {
-    //   errors.noOfPassengers = "No Of Passengers is required";
-    //   formIsValid = false;
-    // }
-
     if (!seatType.trim()) {
       errors.seatType = "Seat Type is required";
-      formIsValid = false;
-    }
-
-    if (!ticketPrice.trim()) {
-      errors.ticketPrice = "Ticket Price is required";
       formIsValid = false;
     }
 
@@ -113,28 +108,16 @@ const EditBookings = () => {
     e.preventDefault();
     if (!validateForm()) return;
 
-    const confirmed = window.confirm(
-      "Are you sure you want to update this booking?"
-    );
+    const confirmed = window.confirm("Are you sure you want to update this booking?");
     if (!confirmed) return;
 
     const updatedBookingData = {
-      bookingid,
-      fullName,
-      age,
-      contactNumber,
-      emailAddress,
-      passportNumber,
-      airlineName,
-      flightClass,
-      noOfPassengers,
-      seatType,
-      ticketPrice,
-      paymentMethod,
+      bookingid, fullName, age, contactNumber, emailAddress,
+      passportNumber, airlineName, flightClass, noOfPassengers,
+      seatType, ticketPrice, paymentMethod,
     };
 
-    axios
-      .put(`http://localhost:8000/booking/update/${id}`, updatedBookingData)
+    axios.put(`http://localhost:8000/booking/update/${id}`, updatedBookingData)
       .then(() => {
         alert("Updated Successfully!");
         navigate("/bookingDetails");
@@ -145,21 +128,8 @@ const EditBookings = () => {
   return (
     <div className="editcontainer">
       <div className="editcard">
-        <h2 className="edittitle">Update Booing Details</h2>
+        <h2 className="edittitle">Update Booking Details</h2>
         <form onSubmit={updateData}>
-          {/* <div className="editform-group">
-            <label>Booking ID</label>
-            <input
-              type="text"
-              value={bookingid}
-              onChange={(e) => setBookingId(e.target.value)}
-              className={formErrors.bookingid ? "error" : ""}
-            />
-            {formErrors.bookingid && (
-              <p className="editerror-message">{formErrors.bookingid}</p>
-            )}
-          </div> */}
-
           <div className="editform-group">
             <label>Full Name</label>
             <input
@@ -168,48 +138,44 @@ const EditBookings = () => {
               onChange={(e) => setFullName(e.target.value)}
               className={formErrors.fullName ? "error" : ""}
             />
-            {formErrors.fullName && (
-              <p className="editerror-message">{formErrors.fullName}</p>
-            )}
+            {formErrors.fullName && <p className="editerror-message">{formErrors.fullName}</p>}
           </div>
 
           <div className="editform-group">
             <label>Age</label>
             <input
-              type="text"
+              type="number"
               value={age}
               onChange={(e) => setAge(e.target.value)}
-              className={formErrors.age ? "error" : ""}
             />
-            {formErrors.age && (
-              <p className="editerror-message">{formErrors.age}</p>
-            )}
           </div>
 
           <div className="editform-group">
             <label>Contact Number</label>
             <input
-              type="text"
+              type="tel"
               value={contactNumber}
-              onChange={(e) => setContactNumber(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (/^\d{0,10}$/.test(value)) setContactNumber(value);
+              }}
+              maxLength="10"
+              pattern="\d{10}"
+              placeholder="10-digit number"
               className={formErrors.contactNumber ? "error" : ""}
             />
-            {formErrors.contactNumber && (
-              <p className="editerror-message">{formErrors.contactNumber}</p>
-            )}
+            {formErrors.contactNumber && <p className="editerror-message">{formErrors.contactNumber}</p>}
           </div>
 
           <div className="editform-group">
             <label>Email Address</label>
             <input
-              type="text"
+              type="email"
               value={emailAddress}
               onChange={(e) => setEmailAddress(e.target.value)}
               className={formErrors.emailAddress ? "error" : ""}
             />
-            {formErrors.emailAddress && (
-              <p className="editerror-message">{formErrors.emailAddress}</p>
-            )}
+            {formErrors.emailAddress && <p className="editerror-message">{formErrors.emailAddress}</p>}
           </div>
 
           <div className="editform-group">
@@ -220,61 +186,61 @@ const EditBookings = () => {
               onChange={(e) => setPassportNumber(e.target.value)}
               className={formErrors.passportNumber ? "error" : ""}
             />
-            {formErrors.passportNumber && (
-              <p className="editerror-message">{formErrors.passportNumber}</p>
-            )}
+            {formErrors.passportNumber && <p className="editerror-message">{formErrors.passportNumber}</p>}
           </div>
 
           <div className="editform-group">
             <label>Airline Name</label>
-            <input
-              type="text"
+            <select
               value={airlineName}
               onChange={(e) => setAirlineName(e.target.value)}
               className={formErrors.airlineName ? "error" : ""}
-            />
-            {formErrors.airlineName && (
-              <p className="editerror-message">{formErrors.airlineName}</p>
-            )}
+            >
+              <option value="">Select Airline</option>
+              {airlineOptions.map((option) => (
+                <option key={option} value={option}>{option}</option>
+              ))}
+            </select>
+            {formErrors.airlineName && <p className="editerror-message">{formErrors.airlineName}</p>}
           </div>
 
           <div className="editform-group">
             <label>Flight Class</label>
-            <input
-              type="text"
+            <select
               value={flightClass}
               onChange={(e) => setFlightClass(e.target.value)}
               className={formErrors.flightClass ? "error" : ""}
-            />
-            {formErrors.flightClass && (
-              <p className="editerror-message">{formErrors.flightClass}</p>
-            )}
+            >
+              <option value="">Select Flight Class</option>
+              {flightClassOptions.map((option) => (
+                <option key={option} value={option}>{option}</option>
+              ))}
+            </select>
+            {formErrors.flightClass && <p className="editerror-message">{formErrors.flightClass}</p>}
           </div>
 
           <div className="editform-group">
             <label>No Of Passengers</label>
             <input
-              type="text"
+              type="number"
               value={noOfPassengers}
               onChange={(e) => setNoOfPassengers(e.target.value)}
-              className={formErrors.noOfPassengers ? "error" : ""}
             />
-            {formErrors.noOfPassengers && (
-              <p className="editerror-message">{formErrors.noOfPassengers}</p>
-            )}
           </div>
 
           <div className="editform-group">
             <label>Seat Type</label>
-            <input
-              type="text"
+            <select
               value={seatType}
               onChange={(e) => setSeatType(e.target.value)}
               className={formErrors.seatType ? "error" : ""}
-            />
-            {formErrors.seatType && (
-              <p className="editerror-message">{formErrors.seatType}</p>
-            )}
+            >
+              <option value="">Select Seat Type</option>
+              {seatTypeOptions.map((option) => (
+                <option key={option} value={option}>{option}</option>
+              ))}
+            </select>
+            {formErrors.seatType && <p className="editerror-message">{formErrors.seatType}</p>}
           </div>
 
           <div className="editform-group">
@@ -282,30 +248,28 @@ const EditBookings = () => {
             <input
               type="text"
               value={ticketPrice}
-              onChange={(e) => setTicketPrice(e.target.value)}
-              className={formErrors.ticketPrice ? "error" : ""}
+              readOnly
+              disabled
+              className="disabled-input"
             />
-            {formErrors.ticketPrice && (
-              <p className="editerror-message">{formErrors.ticketPrice}</p>
-            )}
           </div>
 
           <div className="editform-group">
             <label>Payment Method</label>
-            <input
-              type="text"
+            <select
               value={paymentMethod}
               onChange={(e) => setPaymentMethod(e.target.value)}
               className={formErrors.paymentMethod ? "error" : ""}
-            />
-            {formErrors.paymentMethod && (
-              <p className="editerror-message">{formErrors.paymentMethod}</p>
-            )}
+            >
+              <option value="">Select Payment Method</option>
+              {paymentMethodOptions.map((option) => (
+                <option key={option} value={option}>{option}</option>
+              ))}
+            </select>
+            {formErrors.paymentMethod && <p className="editerror-message">{formErrors.paymentMethod}</p>}
           </div>
 
-          <button type="submit" className="update-btn">
-            Update
-          </button>
+          <button type="submit" className="update-btn">Update</button>
         </form>
       </div>
     </div>
