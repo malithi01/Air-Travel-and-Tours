@@ -48,6 +48,7 @@ export default class header extends Component {
                 style={{ marginRight: "50px", marginLeft: "50px" }}
               >
                 <li>
+                  <a href="/ratingAndReviewsDashboard">Reviews and Ratings</a>
                   <a href="/ratingsAndReviewsDashboard">Reviews and Ratings</a>
                 </li>
               </div>
