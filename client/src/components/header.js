@@ -5,7 +5,7 @@ export default class header extends Component {
   render() {
     return (
       <div>
-        <div className="header" style={{margin:"none"}}>
+        <div className="header" style={{ margin: "none" }}>
           <div>
             <ul className="navbar">
               <div
@@ -13,7 +13,7 @@ export default class header extends Component {
                 style={{ marginRight: "150px", marginLeft: "50px" }}
               >
                 <li style={{ alignItems: "center" }}>
-                  <a class="active" href="">
+                  <a class="active" href="flightDashboard">
                     Flight Booking
                   </a>
                 </li>
@@ -31,7 +31,7 @@ export default class header extends Component {
 
               <div
                 className="rDetails"
-                style={{  marginRight: "50px", marginLeft: "50px" }}
+                style={{ marginRight: "50px", marginLeft: "50px" }}
               >
                 <li>
                   <a href="/carDashboard">Car Rental</a>
@@ -42,13 +42,13 @@ export default class header extends Component {
                   <img src="./images/logo.png" className="image"></img>
                   </a>
                 </div> */}
-                
+
               <div
                 className="rDetails"
-                style={{  marginRight: "50px", marginLeft: "50px" }}
+                style={{ marginRight: "50px", marginLeft: "50px" }}
               >
                 <li>
-                  <a href="/viewProductCnt">Reviews and Ratings</a>
+                  <a href="/ratingsAndReviewsDashboard">Reviews and Ratings</a>
                 </li>
               </div>
               <div
