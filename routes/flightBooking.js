@@ -56,4 +56,37 @@ router.delete("/booking/delete/:id", async (req, res) => {
   }
 });
 
+router.get("/booking/latest", async (req, res) => {
+  try {
+    // Sort by created date or bookingid, limit to the latest entry
+    const latestBooking = await Booking.findOne()
+      .sort({ bookingid: -1 })
+      .exec();
+
+    if (latestBooking && latestBooking.bookingid) {
+      return res.status(200).json({ latestBookingId: latestBooking.bookingid });
+    } else {
+      return res.status(200).json({ latestBookingId: null });
+    }
+  } catch (err) {
+    return res.status(400).json({ error: err.message });
+  }
+});
+
+//Get specific booking details by ID
+router.get("/booking/:id", async (req, res) => {
+  try {
+    let bookingID = req.params.id;
+    let bookingDetails = await Booking.findById(bookingID);
+    if (!bookingDetails) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Record not found" });
+    }
+    return res.status(200).json({ success: true, bookingDetails });
+  } catch (err) {
+    return res.status(400).json({ success: false, error: err.message });
+  }
+});
+
 module.exports = router;

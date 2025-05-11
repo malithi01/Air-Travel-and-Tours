@@ -4,27 +4,36 @@ import { useParams, useNavigate } from "react-router-dom";
 
 const EditBookings = () => {
   const [bookingid, setBookingId] = useState("");
-    const [fullName, setFullName] = useState("");
-    const [age, setAge] = useState("");
-    const [contactNumber, setContactNumber] = useState("");
-    const [emailAddress, setEmailAddress] = useState("");
-    const [passportNumber, setPassportNumber] = useState("");
-    const [airlineName, setAirlineName] = useState("");
-    const [flightClass, setFlightClass] = useState("");
-    const [noOfPassengers, setNoOfPassengers] = useState("");
-    const [seatType, setSeatType] = useState("");
-    const [ticketPrice, setTicketPrice] = useState("");
-    const [paymentMethod, setPaymentMethod] = useState("");
-    const [formErrors, setFormErrors] = useState({});
+  const [fullName, setFullName] = useState("");
+  const [age, setAge] = useState("");
+  const [contactNumber, setContactNumber] = useState("");
+  const [emailAddress, setEmailAddress] = useState("");
+  const [passportNumber, setPassportNumber] = useState("");
+  const [airlineName, setAirlineName] = useState("");
+  const [flightClass, setFlightClass] = useState("");
+  const [noOfPassengers, setNoOfPassengers] = useState("");
+  const [seatType, setSeatType] = useState("");
+  const [ticketPrice, setTicketPrice] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const [formErrors, setFormErrors] = useState({});
 
   const { id } = useParams();
   const navigate = useNavigate();
 
+  const airlineOptions = [
+    "Emirates", "Qatar Airways", "Singapore Airlines", "Air France",
+    "Lufthansa", "British Airways", "American Airlines", "Delta Air Lines",
+    "United Airlines", "Other",
+  ];
+
+  const flightClassOptions = ["Economy", "Premium Economy", "Business", "First Class"];
+  const seatTypeOptions = ["Window", "Middle", "Aisle", "Bulkhead", "Exit Row"];
+  const paymentMethodOptions = ["Credit Card", "Debit Card", "PayPal", "Bank Transfer", "Cash"];
+
   useEffect(() => {
-    axios
-      .get(`http://localhost:8000/booking/${id}`)
+    axios.get(`http://localhost:8000/booking/${id}`)
       .then((res) => {
-        const data = res.data.rentDetails;
+        const data = res.data.bookingDetails;
         setBookingId(data.bookingid);
         setFullName(data.fullName);
         setAge(data.age);
@@ -37,7 +46,6 @@ const EditBookings = () => {
         setSeatType(data.seatType);
         setTicketPrice(data.ticketPrice);
         setPaymentMethod(data.paymentMethod);
-        
       })
       .catch((err) => console.log("Error fetching data"));
   }, [id]);
@@ -46,51 +54,50 @@ const EditBookings = () => {
     const errors = {};
     let formIsValid = true;
 
-    if (!carOrderid.trim()) {
-      errors.carOrderid = "Order ID is required";
+    if (!fullName.trim()) {
+      errors.fullName = "Full name is required";
       formIsValid = false;
     }
 
-    if (!destination.trim()) {
-      errors.destination = "Destination is required";
+    if (!contactNumber.trim()) {
+      errors.contactNumber = "Contact Number is required";
+      formIsValid = false;
+    } else if (!/^\d{10}$/.test(contactNumber)) {
+      errors.contactNumber = "Contact Number must be exactly 10 digits";
       formIsValid = false;
     }
 
-    if (!vehicleType.trim()) {
-      errors.vehicleType = "Vehicle type is required";
+    if (!emailAddress.trim()) {
+      errors.emailAddress = "Email Address is required";
+      formIsValid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailAddress)) {
+      errors.emailAddress = "Invalid Email Address format";
       formIsValid = false;
     }
 
-    if (!pickUpLocation.trim()) {
-      errors.pickUpLocation = "Pick Up Location is required";
+    if (!passportNumber.trim()) {
+      errors.passportNumber = "Passport Number is required";
       formIsValid = false;
     }
 
-    if (!pickUpDate) {
-      errors.pickUpDate = "Pick Up Date is required";
-      formIsValid = false;
-    } else {
-      const currentDate = new Date();
-      const selectedDate = new Date(pickUpDate);
-      if (selectedDate < currentDate) {
-        errors.pickUpDate = "Pick Up Date cannot be a past date";
-        formIsValid = false;
-      }
-    }
-
-    if (!dropOffDate) {
-      errors.dropOffDate = "Drop Off Date is required";
+    if (!airlineName.trim()) {
+      errors.airlineName = "Airline Name is required";
       formIsValid = false;
     }
 
-    if (pickUpDate && dropOffDate) {
-      const pickUp = new Date(pickUpDate);
-      const dropOff = new Date(dropOffDate);
+    if (!flightClass.trim()) {
+      errors.flightClass = "Flight Class is required";
+      formIsValid = false;
+    }
 
-      if (dropOff < pickUp) {
-        errors.dropOffDate = "Drop Off Date cannot be before Pick Up Date";
-        formIsValid = false;
-      }
+    if (!seatType.trim()) {
+      errors.seatType = "Seat Type is required";
+      formIsValid = false;
+    }
+
+    if (!paymentMethod.trim()) {
+      errors.paymentMethod = "Payment Method is required";
+      formIsValid = false;
     }
 
     setFormErrors(errors);
@@ -101,133 +108,168 @@ const EditBookings = () => {
     e.preventDefault();
     if (!validateForm()) return;
 
-    const confirmed = window.confirm(
-      "Are you sure you want to update this Order?"
-    );
+    const confirmed = window.confirm("Are you sure you want to update this booking?");
     if (!confirmed) return;
 
-    const updatedRentData = {
-      carOrderid,
-      destination,
-      vehicleType,
-      pickUpLocation,
-      pickUpDate: new Date(pickUpDate).toISOString(),
-      dropOffLocation,
-      dropOffDate: new Date(dropOffDate).toISOString(),
+    const updatedBookingData = {
+      bookingid, fullName, age, contactNumber, emailAddress,
+      passportNumber, airlineName, flightClass, noOfPassengers,
+      seatType, ticketPrice, paymentMethod,
     };
 
-    axios
-      .put(`http://localhost:8000/rent/update/${id}`, updatedRentData)
+    axios.put(`http://localhost:8000/booking/update/${id}`, updatedBookingData)
       .then(() => {
         alert("Updated Successfully!");
-        navigate("/rentDetails");
+        navigate("/bookingDetails");
       })
       .catch(() => console.log("Update failed!"));
-  };
-
-  const getOneDayLaterDate = () => {
-    const today = new Date();
-    today.setDate(today.getDate() + 2);
-    return today.toISOString().slice(0, 16);
   };
 
   return (
     <div className="editcontainer">
       <div className="editcard">
-        <h2 className="edittitle">Update Rent Details</h2>
+        <h2 className="edittitle">Update Booking Details</h2>
         <form onSubmit={updateData}>
           <div className="editform-group">
-            <label>Order ID</label>
+            <label>Full Name</label>
             <input
               type="text"
-              value={carOrderid}
-              onChange={(e) => setCarOrderId(e.target.value)}
-              className={formErrors.carOrderid ? "error" : ""}
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              className={formErrors.fullName ? "error" : ""}
             />
-            {formErrors.carOrderid && (
-              <p className="editerror-message">{formErrors.carOrderid}</p>
-            )}
+            {formErrors.fullName && <p className="editerror-message">{formErrors.fullName}</p>}
           </div>
 
           <div className="editform-group">
-            <label>Destination</label>
+            <label>Age</label>
             <input
-              type="text"
-              value={destination}
-              onChange={(e) => setDestination(e.target.value)}
-              className={formErrors.destination ? "error" : ""}
+              type="number"
+              value={age}
+              onChange={(e) => setAge(e.target.value)}
             />
-            {formErrors.destination && (
-              <p className="editerror-message">{formErrors.destination}</p>
-            )}
           </div>
 
           <div className="editform-group">
-            <label>Vehicle Type</label>
+            <label>Contact Number</label>
+            <input
+              type="tel"
+              value={contactNumber}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (/^\d{0,10}$/.test(value)) setContactNumber(value);
+              }}
+              maxLength="10"
+              pattern="\d{10}"
+              placeholder="10-digit number"
+              className={formErrors.contactNumber ? "error" : ""}
+            />
+            {formErrors.contactNumber && <p className="editerror-message">{formErrors.contactNumber}</p>}
+          </div>
+
+          <div className="editform-group">
+            <label>Email Address</label>
+            <input
+              type="email"
+              value={emailAddress}
+              onChange={(e) => setEmailAddress(e.target.value)}
+              className={formErrors.emailAddress ? "error" : ""}
+            />
+            {formErrors.emailAddress && <p className="editerror-message">{formErrors.emailAddress}</p>}
+          </div>
+
+          <div className="editform-group">
+            <label>Passport Number</label>
+            <input
+              type="text"
+              value={passportNumber}
+              onChange={(e) => setPassportNumber(e.target.value)}
+              className={formErrors.passportNumber ? "error" : ""}
+            />
+            {formErrors.passportNumber && <p className="editerror-message">{formErrors.passportNumber}</p>}
+          </div>
+
+          <div className="editform-group">
+            <label>Airline Name</label>
             <select
-              value={vehicleType}
-              onChange={(e) => setVehicleType(e.target.value)}
+              value={airlineName}
+              onChange={(e) => setAirlineName(e.target.value)}
+              className={formErrors.airlineName ? "error" : ""}
             >
-              <option value="">Select a Vehicle</option>
-              <option value="Car">Car</option>
-              <option value="Van">Van</option>
-              <option value="Bike">Bike</option>
+              <option value="">Select Airline</option>
+              {airlineOptions.map((option) => (
+                <option key={option} value={option}>{option}</option>
+              ))}
             </select>
+            {formErrors.airlineName && <p className="editerror-message">{formErrors.airlineName}</p>}
           </div>
 
           <div className="editform-group">
-            <label>Pick Up Location</label>
+            <label>Flight Class</label>
+            <select
+              value={flightClass}
+              onChange={(e) => setFlightClass(e.target.value)}
+              className={formErrors.flightClass ? "error" : ""}
+            >
+              <option value="">Select Flight Class</option>
+              {flightClassOptions.map((option) => (
+                <option key={option} value={option}>{option}</option>
+              ))}
+            </select>
+            {formErrors.flightClass && <p className="editerror-message">{formErrors.flightClass}</p>}
+          </div>
+
+          <div className="editform-group">
+            <label>No Of Passengers</label>
+            <input
+              type="number"
+              value={noOfPassengers}
+              onChange={(e) => setNoOfPassengers(e.target.value)}
+            />
+          </div>
+
+          <div className="editform-group">
+            <label>Seat Type</label>
+            <select
+              value={seatType}
+              onChange={(e) => setSeatType(e.target.value)}
+              className={formErrors.seatType ? "error" : ""}
+            >
+              <option value="">Select Seat Type</option>
+              {seatTypeOptions.map((option) => (
+                <option key={option} value={option}>{option}</option>
+              ))}
+            </select>
+            {formErrors.seatType && <p className="editerror-message">{formErrors.seatType}</p>}
+          </div>
+
+          <div className="editform-group">
+            <label>Ticket Price</label>
             <input
               type="text"
-              value={pickUpLocation}
-              onChange={(e) => setPickUpLocation(e.target.value)}
-            />
-            {formErrors.pickUpLocation && (
-              <span className="error-text">{formErrors.pickUpLocation}</span>
-            )}
-          </div>
-
-          <div className="editform-group">
-            <label>Pick Up Date</label>
-            <input
-              type="datetime-local"
-              value={pickUpDate}
-              min={getOneDayLaterDate()}
-              onChange={(e) => setPickUpDate(e.target.value)}
-            />
-            {formErrors.pickUpDate && (
-              <span className="error-text">{formErrors.pickUpDate}</span>
-            )}
-          </div>
-
-          <div className="editform-group">
-            <label>Drop Off Location</label>
-            <input
-              type="text"
-              value={dropOffLocation}
-              onChange={(e) => setDropOffLocation(e.target.value)}
+              value={ticketPrice}
+              readOnly
+              disabled
+              className="disabled-input"
             />
           </div>
 
           <div className="editform-group">
-            <label>Drop Off Date</label>
-            <input
-              type="datetime-local"
-              value={dropOffDate}
-              min={
-                pickUpDate
-                  ? new Date(new Date(pickUpDate).getTime() + 2)
-                      .toISOString()
-                      .slice(0, 16)
-                  : new Date().toISOString().slice(0, 16)
-              }
-              onChange={(e) => setDropOffDate(e.target.value)}
-            />
+            <label>Payment Method</label>
+            <select
+              value={paymentMethod}
+              onChange={(e) => setPaymentMethod(e.target.value)}
+              className={formErrors.paymentMethod ? "error" : ""}
+            >
+              <option value="">Select Payment Method</option>
+              {paymentMethodOptions.map((option) => (
+                <option key={option} value={option}>{option}</option>
+              ))}
+            </select>
+            {formErrors.paymentMethod && <p className="editerror-message">{formErrors.paymentMethod}</p>}
           </div>
 
-          <button type="submit" className="update-btn">
-            Update
-          </button>
+          <button type="submit" className="update-btn">Update</button>
         </form>
       </div>
     </div>
