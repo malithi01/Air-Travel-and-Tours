@@ -58,6 +58,11 @@ export default function HotelBookingDashboard() {
 
         return matchesSearch && matchesPrice;
     });
+    
+    // Function to handle booking with hotel name
+    const handleBookNow = (hotelName) => {
+        navigate(`/createHotel`, { state: { selectedHotel: hotelName } });
+    };
 
     return (
         <div>
@@ -114,7 +119,7 @@ export default function HotelBookingDashboard() {
                                         <span className="hotel-price">${hotel.price}/night</span>
                                         <button
                                             className="book-button"
-                                            onClick={() => navigate(`/createHotel`)}
+                                            onClick={() => handleBookNow(hotel.name)}
                                         >
                                             Book Now
                                         </button>

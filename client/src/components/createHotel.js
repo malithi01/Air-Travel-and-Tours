@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 // Update the import path to match your project structure
 import "../stylesheets/createHotel.css";
 
 const CreateHotelDetails = () => {
+    const location = useLocation();
     const [hotelBookingID, setHotelBookingID] = useState("");
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
@@ -29,11 +31,11 @@ const CreateHotelDetails = () => {
 
             if (latestBookingId) {
                 //extract numeric part and increment
-                const numericPart = parseInt(latestBookingId.slide(1), 10) + 1;
+                const numericPart = parseInt(latestBookingId.slice(1), 10) + 1;
                 const newBookingId = `H${numericPart.toString().padStart(3, "0")}`;
                 setHotelBookingID(newBookingId);
             } else {
-                //if mobookings exist, start with H001
+                //if no bookings exist, start with H001
                 setHotelBookingID("H001");
             }
         } catch (error) {
@@ -44,7 +46,12 @@ const CreateHotelDetails = () => {
 
     useEffect(() => {
         fetchLatestHotelBookingId();
-    }, []);
+        
+        // Set hotel name from navigation state if available
+        if (location.state && location.state.selectedHotel) {
+            setHotel(location.state.selectedHotel);
+        }
+    }, [location.state]);
 
     // Validating the form details
     const validateForm = () => {
@@ -266,6 +273,7 @@ const CreateHotelDetails = () => {
                             value={hotel}
                             onChange={(e) => setHotel(e.target.value)}
                             placeholder="Enter hotel name"
+                            readOnly={location.state && location.state.selectedHotel ? true : false}
                         />
                         {formErrors.hotel &&
                             <span className="hotel-booking-error">{formErrors.hotel}</span>

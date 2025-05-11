@@ -177,3 +177,39 @@
       transform: translate(-50%, -50%) rotate(360deg);
     }
   }
+
+  .back-button-container {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.back-button {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+}
+
+.back-button:hover {
+    background-color: #5a6268;
+}
+
+.edit-button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+/* If you want the Update button to fill the remaining space */
+.update-btn {
+    flex: 1;
+}
