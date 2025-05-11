@@ -6,11 +6,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faStar as solidStar, 
   faCheck, 
-  faMapMarkerAlt, 
   faThumbsUp, 
   faShare 
 } from '@fortawesome/free-solid-svg-icons';
 import { faStar as regularStar } from '@fortawesome/free-regular-svg-icons';
+import Header from "./header";
+import Footer from "./footer";
+
 
 const ViewRatingAndReviewDetails = () => {
   const [reviewDetails, setReviewDetails] = useState([]);
@@ -82,6 +84,8 @@ const ViewRatingAndReviewDetails = () => {
   };
 
   return (
+    <div>
+      <Header />
     <div className="reviews-container">
       {reviewDetails.length === 0 ? (
         <div className="no-reviews">No reviews found</div>
@@ -147,6 +151,8 @@ const ViewRatingAndReviewDetails = () => {
           </div>
         ))
       )}
+    </div>
+    <Footer />
     </div>
   );
 };

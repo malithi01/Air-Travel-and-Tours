@@ -305,7 +305,7 @@ export default class Dashboard extends Component {
             </div>
           </div>
           <div className="view-all-container">
-            <Link to="/reviews" className="view-all-link">
+            <Link to="/ratingAndReviewsDashboard" className="view-all-link">
               View All Reviews <i className="fas fa-arrow-right"></i>
             </Link>
           </div>
